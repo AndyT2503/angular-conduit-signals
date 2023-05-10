@@ -1,6 +1,11 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
+import { EnvironmentConfig, initAppConfig } from './app/app.config';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+fetch('assets/config/app-config.json')
+  .then((res) => res.json() as Promise<EnvironmentConfig>)
+  .then((config) =>
+    bootstrapApplication(AppComponent, initAppConfig(config)).catch((err) =>
+      console.error(err)
+    )
+  );
