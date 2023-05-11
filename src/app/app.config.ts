@@ -1,10 +1,12 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { createInjectionToken } from './shared/utils';
 import { apiPrefixInterceptor } from './shared/interceptors';
+import { provideComponentStore } from '@ngrx/component-store';
+import { AuthStore } from './shared/state';
 
 export interface EnvironmentConfig {
   apiUrl: string;
@@ -16,7 +18,8 @@ export const [injectEnvironmentConfig, provideEnvironmentConfig] =
 export const initAppConfig = (config: EnvironmentConfig): ApplicationConfig => {
   return {
     providers: [
-      provideRouter(routes),
+      provideComponentStore(AuthStore),
+      provideRouter(routes, withHashLocation()),
       provideEnvironmentConfig(config),
       provideHttpClient(withInterceptors([apiPrefixInterceptor])),
     ],

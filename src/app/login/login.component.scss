@@ -1,0 +1,34 @@
+.login {
+  text-align: center;
+
+  .register {
+    color: #5cb85c;
+    text-decoration: none;
+
+    &:hover {
+      color: #3d8b3d;
+      text-decoration: underline;
+    }
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 620px;
+    margin: 16px auto;
+
+    .sign-in-btn {
+      margin-left: auto;
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #5cb85c;
+
+      &:hover {
+        color: #fff;
+        background-color: #449d44;
+        border-color: #419641;
+      }
+    }
+  }
+}

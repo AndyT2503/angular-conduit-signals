@@ -14,7 +14,7 @@ export function getSelectors<TStore extends ComponentStore<any>>(
   return new Proxy({} as StoreSelectors<TStore>, {
     get(target, p, receiver) {
       const prop = p as string & keyof StoreSelectors<TStore>;
-      if (target[prop] !== null) {
+      if (!!target[prop]) {
         return Reflect.get(target, p, receiver);
       }
       target[prop] = store.selectSignal(

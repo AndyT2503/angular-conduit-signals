@@ -10,7 +10,7 @@ export const apiPrefixInterceptor: HttpInterceptorFn = (
   const env = injectEnvironmentConfig();
   if (!req.url.includes('http')) {
     const reqClone = req.clone({
-      url: `${env.apiUrl}/${req.url}`,
+      url: `${env.apiUrl}${req.url}`,
     });
     return next(reqClone);
   }

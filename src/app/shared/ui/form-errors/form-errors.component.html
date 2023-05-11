@@ -1,0 +1,3 @@
+<ul class="list-error" *ngIf="!!formErrors()">
+  <li *ngFor="let error of formErrors()" class="error">{{ error }}</li>
+</ul>

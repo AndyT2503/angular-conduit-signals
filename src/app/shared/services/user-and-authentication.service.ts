@@ -24,7 +24,7 @@ export class UserAndAuthenticationService {
   readonly #httpClient = inject(HttpClient);
 
   login(user: LoginRequest): Observable<User> {
-    return this.#httpClient.post<User>('/user/login', {
+    return this.#httpClient.post<User>('/users/login', {
       user,
     });
   }
