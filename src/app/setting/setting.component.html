@@ -1,0 +1,40 @@
+<div class="setting">
+  <h1>Your Settings</h1>
+
+  <form [formGroup]="settingForm" class="setting-form">
+    <input
+      type="text"
+      formControlName="username"
+      class="form-control form-control-lg"
+      autocomplete="new-username"
+      placeholder="Username"
+    />
+    <textarea
+      formControlName="bio"
+      rows="6"
+      class="form-control form-control-lg"
+      placeholder="Short bio about you"
+    ></textarea>
+    <input
+      type="email"
+      formControlName="email"
+      class="form-control form-control-lg"
+      autocomplete="new-email"
+      placeholder="Email"
+    />
+    <input
+      type="password"
+      formControlName="newPassword"
+      class="form-control form-control-lg"
+      autocomplete="new-password"
+      placeholder="New Password"
+    />
+    <button type="button" (click)="submit()" class="btn update-btn btn-lg">
+      Update Setting
+    </button>
+    <hr/>
+    <button type="button" class="btn logout-btn btn-outline-danger" (click)="logout()">
+      Or click here to logout
+    </button>
+  </form>
+</div>

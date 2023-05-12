@@ -8,6 +8,7 @@ import { ErrorResponse, User } from '../models';
 import {
   LoginRequest,
   RegisterRequest,
+  UpdateProfileRequest,
   UserAndAuthenticationService,
 } from '../services';
 import { ComponentStoreWithSelectors, LocalStorageService } from '../utils';
@@ -80,5 +81,24 @@ export class AuthStore
       });
       this.#router.navigate(['/login']);
     })
+  );
+
+  readonly updateProfile = this.effect<UpdateProfileRequest>(
+    switchMap((request) =>
+      this.#authService.updateUserProfile(request).pipe(
+        tapResponse({
+          next: (user) => {
+            //TODO: Check whether response return token
+            this.#localStorage.setItem(StorageKey.user, user);
+            this.patchState({
+              user,
+            });
+          },
+          error: (error) => {
+            console.error('error update', error);
+          },
+        })
+      )
+    )
   );
 }
