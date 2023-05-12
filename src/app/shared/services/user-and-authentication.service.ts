@@ -23,24 +23,24 @@ export interface UpdateProfileRequest extends RegisterRequest {
 export class UserAndAuthenticationService {
   readonly #httpClient = inject(HttpClient);
 
-  login(user: LoginRequest): Observable<User> {
-    return this.#httpClient.post<User>('/users/login', {
+  login(user: LoginRequest): Observable<{user: User}> {
+    return this.#httpClient.post<{user: User}>('/users/login', {
       user,
     });
   }
 
-  register(user: RegisterRequest): Observable<User> {
-    return this.#httpClient.post<User>('/users', {
+  register(user: RegisterRequest): Observable<{user: User}> {
+    return this.#httpClient.post<{user: User}>('/users', {
       user,
     });
   }
 
-  getUserProfile(): Observable<User> {
-    return this.#httpClient.get<User>('/user');
+  getUserProfile(): Observable<{user: User}> {
+    return this.#httpClient.get<{user: User}>('/user');
   }
 
-  updateUserProfile(user: UpdateProfileRequest): Observable<User> {
-    return this.#httpClient.put<User>('/user', {
+  updateUserProfile(user: UpdateProfileRequest): Observable<{user: User}> {
+    return this.#httpClient.put<{user: User}>('/user', {
       user,
     });
   }

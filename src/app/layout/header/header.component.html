@@ -16,6 +16,7 @@
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
       >
+        <img class="user-avatar" [src]="user.image" alt="user.username">
         {{ user.username }}
       </li>
     </ng-container>

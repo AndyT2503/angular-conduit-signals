@@ -28,6 +28,7 @@ export class AuthStore
   readonly #router = inject(Router);
   ngrxOnStoreInit(): void {
     const user = this.#localStorage.getItem<User>(StorageKey.user);
+    console.log(user)
     this.setState({
       isAuthenticated: !!user,
       user: user,
@@ -36,10 +37,10 @@ export class AuthStore
   }
 
   readonly #handleLoginAndRegisterRequest = {
-    next: (user: User) => {
-      this.#localStorage.setItem(StorageKey.user, user);
+    next: (res: {user: User}) => {
+      this.#localStorage.setItem(StorageKey.user, res.user);
       this.patchState({
-        user,
+        user: res.user,
         isAuthenticated: true,
       });
       if (!!this.selectors.errorResponse()) {
@@ -87,11 +88,10 @@ export class AuthStore
     switchMap((request) =>
       this.#authService.updateUserProfile(request).pipe(
         tapResponse({
-          next: (user) => {
-            //TODO: Check whether response return token
-            this.#localStorage.setItem(StorageKey.user, user);
+          next: (res) => {
+            this.#localStorage.setItem(StorageKey.user, res.user);
             this.patchState({
-              user,
+              user: res.user,
             });
           },
           error: (error) => {
