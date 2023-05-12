@@ -1,3 +1,6 @@
+export interface UserAPIResponse {
+  user: User;
+}
 export interface User {
   email: string;
   token: string;

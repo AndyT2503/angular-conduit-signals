@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { switchMap, tap } from 'rxjs';
 import { StorageKey } from '../constants';
-import { ErrorResponse, User } from '../models';
+import { ErrorResponse, User, UserAPIResponse } from '../models';
 import {
   LoginRequest,
   RegisterRequest,
@@ -28,7 +28,6 @@ export class AuthStore
   readonly #router = inject(Router);
   ngrxOnStoreInit(): void {
     const user = this.#localStorage.getItem<User>(StorageKey.user);
-    console.log(user)
     this.setState({
       isAuthenticated: !!user,
       user: user,
@@ -37,7 +36,7 @@ export class AuthStore
   }
 
   readonly #handleLoginAndRegisterRequest = {
-    next: (res: {user: User}) => {
+    next: (res: UserAPIResponse) => {
       this.#localStorage.setItem(StorageKey.user, res.user);
       this.patchState({
         user: res.user,

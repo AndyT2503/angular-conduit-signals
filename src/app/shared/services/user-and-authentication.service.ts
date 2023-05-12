@@ -1,21 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { User } from '../models';
+import { User, UserAPIResponse } from '../models';
 import { Observable } from 'rxjs';
 
-export interface LoginRequest {
-  email: string;
+export type LoginRequest = Pick<User, 'email'> & { password: string };
+
+export type RegisterRequest = Pick<User, 'email' | 'username'> & {
   password: string;
-}
+};
 
-export interface RegisterRequest extends LoginRequest {
-  username: string;
-}
-
-export interface UpdateProfileRequest extends RegisterRequest {
-  bio: string;
-  image: string;
-}
+export type UpdateProfileRequest = Pick<
+  User,
+  'email' | 'username' | 'bio' | 'image'
+> & { password: string };
 
 @Injectable({
   providedIn: 'root',
@@ -23,24 +20,24 @@ export interface UpdateProfileRequest extends RegisterRequest {
 export class UserAndAuthenticationService {
   readonly #httpClient = inject(HttpClient);
 
-  login(user: LoginRequest): Observable<{user: User}> {
-    return this.#httpClient.post<{user: User}>('/users/login', {
+  login(user: LoginRequest): Observable<UserAPIResponse> {
+    return this.#httpClient.post<UserAPIResponse>('/users/login', {
       user,
     });
   }
 
-  register(user: RegisterRequest): Observable<{user: User}> {
-    return this.#httpClient.post<{user: User}>('/users', {
+  register(user: RegisterRequest): Observable<UserAPIResponse> {
+    return this.#httpClient.post<UserAPIResponse>('/users', {
       user,
     });
   }
 
-  getUserProfile(): Observable<{user: User}> {
-    return this.#httpClient.get<{user: User}>('/user');
+  getUserProfile(): Observable<UserAPIResponse> {
+    return this.#httpClient.get<UserAPIResponse>('/user');
   }
 
-  updateUserProfile(user: UpdateProfileRequest): Observable<{user: User}> {
-    return this.#httpClient.put<{user: User}>('/user', {
+  updateUserProfile(user: UpdateProfileRequest): Observable<UserAPIResponse> {
+    return this.#httpClient.put<UserAPIResponse>('/user', {
       user,
     });
   }
