@@ -6,7 +6,7 @@ import { routes } from './app.routes';
 import { createInjectionToken } from './shared/utils';
 import { apiPrefixInterceptor } from './shared/interceptors';
 import { provideComponentStore } from '@ngrx/component-store';
-import { AuthStore } from './shared/state';
+import { AuthStore } from './shared/store';
 
 export interface EnvironmentConfig {
   apiUrl: string;

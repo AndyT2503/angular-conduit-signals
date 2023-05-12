@@ -1,2 +1,2 @@
 export * from './form-errors.component';
-export * from './form-errors.service';
+export * from './form-errors.store';

@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url(../assets/fonts/SourceSansPro-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  src: url(../assets/fonts/TitilliumWeb-Bold.ttf);
+}
+
+:root {
+  --font-source-sans: "Source Sans Pro", sans-serif;
+  --font-titillium: "Titillium Web", sans-serif;
+}

@@ -1,0 +1,16 @@
+footer {
+  height: 66px;
+  background-color: var(--tertiary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    color: var(--default-color);
+    text-decoration: none;
+    font-size: 1.5rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

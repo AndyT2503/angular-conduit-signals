@@ -27,9 +27,13 @@ export type InjectionTokenCreatorReturn<T> = [
 ];
 
 export function createInjectionToken<T>(
-  description: string
+  description: string,
+  options?: {
+    providedIn?: Type<any> | 'root' | 'platform' | 'any' | null | undefined;
+    factory: () => T;
+  }
 ): InjectionTokenCreatorReturn<T> {
-  const token = new InjectionToken<T>(description);
+  const token = new InjectionToken<T>(description, options);
 
   function provideFn(
     valueOrDeps: T | Array<Type<any>>,

@@ -1,7 +1,7 @@
-.login {
+.register {
   text-align: center;
 
-  .register {
+  .login {
     color: var(--primary-color);
     text-decoration: none;
 
@@ -11,14 +11,14 @@
     }
   }
 
-  .login-form {
+  .register-form {
     display: flex;
     flex-direction: column;
     gap: 16px;
     max-width: 620px;
     margin: 16px auto;
 
-    .sign-in-btn {
+    .sign-up-btn {
       margin-left: auto;
       color: var(--default-color);
       background-color: var(--primary-color);;

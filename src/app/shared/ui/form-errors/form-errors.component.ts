@@ -1,6 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormErrorsService } from './form-errors.service';
+import { FormErrorsStore } from './form-errors.store';
 
 @Component({
   selector: 'app-form-errors',
@@ -11,5 +11,5 @@ import { FormErrorsService } from './form-errors.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormErrorsComponent {
-  readonly formErrors = inject(FormErrorsService).formErrors;
+  readonly formErrors = inject(FormErrorsStore).selectors.formErrors;
 }

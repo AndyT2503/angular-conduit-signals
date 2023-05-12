@@ -1,14 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
-import { switchMap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
+import { StorageKey } from '../constants';
 import { ErrorResponse, User } from '../models';
 import {
   LoginRequest,
   RegisterRequest,
   UserAndAuthenticationService,
 } from '../services';
-import { ComponentStoreWithSelectors } from '../utils';
+import { ComponentStoreWithSelectors, LocalStorageService } from '../utils';
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
@@ -21,25 +23,32 @@ export class AuthStore
   implements OnStoreInit
 {
   readonly #authService = inject(UserAndAuthenticationService);
-
+  readonly #localStorage = inject(LocalStorageService);
+  readonly #router = inject(Router);
   ngrxOnStoreInit(): void {
+    const user = this.#localStorage.getItem<User>(StorageKey.user);
     this.setState({
-      isAuthenticated: false,
-      user: null,
+      isAuthenticated: !!user,
+      user: user,
       errorResponse: null,
     });
   }
 
   readonly #handleLoginAndRegisterRequest = {
     next: (user: User) => {
+      this.#localStorage.setItem(StorageKey.user, user);
       this.patchState({
         user,
         isAuthenticated: true,
-        errorResponse: null,
       });
+      if (!!this.selectors.errorResponse()) {
+        this.patchState({
+          errorResponse: null,
+        });
+      }
+      this.#router.navigate(['/']);
     },
     error: (err: HttpErrorResponse) => {
-      console.log(err.error)
       this.patchState({
         errorResponse: err.error,
       });
@@ -60,5 +69,16 @@ export class AuthStore
         .register(request)
         .pipe(tapResponse(this.#handleLoginAndRegisterRequest))
     )
+  );
+
+  readonly logout = this.effect<void>(
+    tap(() => {
+      this.#localStorage.removeItem(StorageKey.user);
+      this.patchState({
+        isAuthenticated: false,
+        user: null,
+      });
+      this.#router.navigate(['/login']);
+    })
   );
 }

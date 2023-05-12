@@ -1,31 +1,34 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
   inject,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { LoginRequest } from '../shared/services';
-import { AuthStore } from '../shared/state';
 import {
-  FormErrorsComponent,
-  FormErrorsService,
-} from '../shared/ui/form-errors';
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { provideComponentStore } from '@ngrx/component-store';
+import { LoginRequest } from '../shared/services';
+import { AuthStore } from '../shared/store';
+import { FormErrorsComponent, FormErrorsStore } from '../shared/ui/form-errors';
 import { TypedFormGroup } from '../shared/utils';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormErrorsComponent, ReactiveFormsModule],
+  imports: [FormErrorsComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FormErrorsService],
+  providers: [provideComponentStore(FormErrorsStore)],
 })
 export default class LoginComponent implements OnInit {
-  readonly #formErrorService = inject(FormErrorsService);
+  readonly #formErrorsStore = inject(FormErrorsStore);
   readonly #authStore = inject(AuthStore);
   readonly #errorResponseChange$ = toObservable(
     this.#authStore.selectors.errorResponse
@@ -33,6 +36,7 @@ export default class LoginComponent implements OnInit {
   readonly loginForm: TypedFormGroup<LoginRequest> = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,
+      validators: [Validators.email],
     }),
     password: new FormControl('', {
       nonNullable: true,
@@ -45,7 +49,7 @@ export default class LoginComponent implements OnInit {
 
   #handleErrorResponse(): void {
     this.#errorResponseChange$.subscribe((error) => {
-      this.#formErrorService.setErrors(error);
+      this.#formErrorsStore.updateFormErrors(error);
     });
   }
 

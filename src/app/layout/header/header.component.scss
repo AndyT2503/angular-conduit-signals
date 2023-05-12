@@ -1,0 +1,30 @@
+header {
+  display: flex;
+  max-width: 1176px;
+  margin: 8px auto;
+  align-items: baseline;
+  .logo {
+    font-family: var(--font-titillium);
+    font-size: 1.5rem;
+    padding-top: 0rem;
+    margin-right: 2rem;
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  .nav-bar {
+    display: flex;
+    gap: 16px;
+    margin-left: auto;
+    list-style-type: none;
+
+    li {
+      color: rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      &:hover,
+      &.active {
+        color: rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+}
