@@ -1,5 +1,10 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter, withHashLocation } from '@angular/router';
+import {
+  PreloadAllModules,
+  provideRouter,
+  withHashLocation,
+  withPreloading,
+} from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
@@ -19,7 +24,11 @@ export const initAppConfig = (config: EnvironmentConfig): ApplicationConfig => {
   return {
     providers: [
       provideComponentStore(AuthStore),
-      provideRouter(routes, withHashLocation()),
+      provideRouter(
+        routes,
+        withHashLocation(),
+        withPreloading(PreloadAllModules)
+      ),
       provideEnvironmentConfig(config),
       provideHttpClient(withInterceptors([apiPrefixInterceptor])),
     ],
