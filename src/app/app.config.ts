@@ -3,6 +3,7 @@ import { ApplicationConfig } from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
+  withComponentInputBinding,
   withHashLocation,
   withPreloading,
 } from '@angular/router';
@@ -26,6 +27,7 @@ export const initAppConfig = (config: EnvironmentConfig): ApplicationConfig => {
       provideComponentStore(AuthStore),
       provideRouter(
         routes,
+        withComponentInputBinding(),
         withHashLocation(),
         withPreloading(PreloadAllModules)
       ),

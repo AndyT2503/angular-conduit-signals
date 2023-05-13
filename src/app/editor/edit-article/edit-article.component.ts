@@ -21,14 +21,13 @@ import { ActivatedRoute } from '@angular/router';
   providers: [provideComponentStore(EditArticleStore)],
 })
 export default class EditArticleComponent implements OnInit {
-  //TODO: use input
-  readonly #route = inject(ActivatedRoute);
+  @Input() slug?: string;
   readonly #editArticleStore = inject(EditArticleStore);
   errorResponse = this.#editArticleStore.selectors.errorResponse;
   article = this.#editArticleStore.selectors.article;
 
   ngOnInit(): void {
-    this.#editArticleStore.getArticle(this.#route.snapshot.params['slug']);
+    this.#editArticleStore.getArticle(this.slug!);
   }
   submit(value: UpsertArticleRequest): void {
     this.#editArticleStore.updateArticle(value);
