@@ -1,0 +1,51 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  Signal,
+} from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormErrorsComponent } from 'src/app/shared/ui/form-errors';
+import { TagListSelectComponent } from './tag-list-select/tag-list-select.component';
+import { UpsertArticleRequest } from 'src/app/shared/services';
+import { TypedFormGroup } from 'src/app/shared/utils';
+import { Article, ErrorResponse } from 'src/app/shared/models';
+
+@Component({
+  selector: 'app-article-form',
+  standalone: true,
+  imports: [ReactiveFormsModule, TagListSelectComponent, FormErrorsComponent],
+  templateUrl: './article-form.component.html',
+  styleUrls: ['./article-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ArticleFormComponent {
+  readonly articleForm: TypedFormGroup<UpsertArticleRequest> = new FormGroup({
+    title: new FormControl('', {
+      nonNullable: true,
+    }),
+    body: new FormControl('', {
+      nonNullable: true,
+    }),
+    description: new FormControl('', {
+      nonNullable: true,
+    }),
+    tagList: new FormControl<string[]>([], {
+      nonNullable: true,
+    }),
+  });
+  @Input({ required: true }) errorResponse!: Signal<ErrorResponse | null>;
+  @Input() set article(value: Article) {
+    if (value.title) {
+      this.articleForm.setValue({
+        tagList: value.tagList,
+        body: value.body,
+        description: value.description,
+        title: value.title,
+      });
+    }
+  }
+  @Output() submit = new EventEmitter<UpsertArticleRequest>();
+}

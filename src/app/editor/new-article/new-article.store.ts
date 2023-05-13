@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { exhaustMap } from 'rxjs';
 import { ErrorResponse } from 'src/app/shared/models';
-import { ArticleService, CreateArticleRequest } from 'src/app/shared/services';
+import { ArticleService, UpsertArticleRequest } from 'src/app/shared/services';
 import { AuthStore } from 'src/app/shared/store';
 import { ComponentStoreWithSelectors } from 'src/app/shared/utils';
 
@@ -26,7 +26,7 @@ export class NewArticleStore
     });
   }
 
-  readonly createNewArticle = this.effect<CreateArticleRequest>(
+  readonly createNewArticle = this.effect<UpsertArticleRequest>(
     exhaustMap((request) =>
       this.#articleService.createArticle(request).pipe(
         tapResponse(

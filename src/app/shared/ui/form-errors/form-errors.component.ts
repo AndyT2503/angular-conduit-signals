@@ -3,6 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  Signal,
+  computed,
   signal
 } from '@angular/core';
 import { ErrorResponse } from '../../models';
@@ -16,10 +18,9 @@ import { ErrorResponse } from '../../models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormErrorsComponent {
-  formErrors = signal<string[] | null>(null);
-  @Input({ required: true }) set errorResponse(error: ErrorResponse | null) {
-    this.formErrors.set(this.#handleErrorResponse(error));
-  }
+  @Input({required: true}) errorResponse!: Signal<ErrorResponse | null>;
+  formErrors = computed(() => this.#handleErrorResponse(this.errorResponse()))
+
 
   #handleErrorResponse(error: ErrorResponse | null): string[] | null {
     if (!error) {

@@ -3,7 +3,7 @@
   <a routerLink="/login" class="login">Have an account?</a>
 
   <form [formGroup]="registerForm" class="register-form">
-    <app-form-errors [errorResponse]="errorResponse()"></app-form-errors>
+    <app-form-errors [errorResponse]="errorResponse"></app-form-errors>
     <input
       type="text"
       formControlName="username"

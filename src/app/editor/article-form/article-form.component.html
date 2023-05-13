@@ -1,0 +1,27 @@
+<form [formGroup]="articleForm" class="article-form" (ngSubmit)="submit.emit(articleForm.getRawValue())">
+  <app-form-errors [errorResponse]="errorResponse"></app-form-errors>
+  <input
+    type="text"
+    formControlName="title"
+    class="form-control form-control-lg"
+    placeholder="Article Title"
+  />
+  <input
+    type="text"
+    formControlName="description"
+    class="form-control"
+    placeholder="What's this article about"
+  />
+  <textarea
+    formControlName="body"
+    rows="6"
+    class="form-control form-control-lg"
+    placeholder="Write your article (in markdown)"
+  ></textarea>
+  <div class="form-group">
+    <app-tag-list-select formControlName="tagList"></app-tag-list-select>
+  </div>
+  <button type="submit" class="btn submit-btn btn-lg">
+    Publish Article
+  </button>
+</form>

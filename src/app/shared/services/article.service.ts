@@ -3,14 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Article, ArticleAPIResponse } from '../models';
 
-export type CreateArticleRequest = Pick<
+export type UpsertArticleRequest = Pick<
   Article,
   'title' | 'description' | 'body' | 'tagList'
->;
-
-export type UpdateArticleRequest = Pick<
-  Article,
-  'title' | 'description' | 'body'
 >;
 
 @Injectable({
@@ -19,7 +14,7 @@ export type UpdateArticleRequest = Pick<
 export class ArticleService {
   readonly #httpClient = inject(HttpClient);
 
-  createArticle(article: CreateArticleRequest): Observable<ArticleAPIResponse> {
+  createArticle(article: UpsertArticleRequest): Observable<ArticleAPIResponse> {
     return this.#httpClient.post<ArticleAPIResponse>('/articles', {
       article,
     });
@@ -27,10 +22,14 @@ export class ArticleService {
 
   updateArticle(
     slug: string,
-    article: UpdateArticleRequest
+    article: UpsertArticleRequest
   ): Observable<ArticleAPIResponse> {
     return this.#httpClient.put<ArticleAPIResponse>(`/articles/${slug}`, {
       article,
     });
+  }
+
+  getArticleDetail(slug: string): Observable<ArticleAPIResponse> {
+    return this.#httpClient.get<ArticleAPIResponse>(`/articles/${slug}`);
   }
 }

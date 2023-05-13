@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 
@@ -19,13 +19,15 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
   ],
 })
 export class TagListSelectComponent implements ControlValueAccessor {
+  readonly #cdr = inject(ChangeDetectorRef);
   tagInput!: string;
   tagsSelected: string[] = [];
   onChange = (value: string[]) => {};
   onTouched = () => {};
 
   writeValue(obj: string[]): void {
-    this.tagsSelected = obj
+    this.tagsSelected = obj;
+    this.#cdr.markForCheck();
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
