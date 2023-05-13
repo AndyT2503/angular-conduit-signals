@@ -3,3 +3,8 @@
 body {
   font-family: var(--font-source-sans);
 }
+
+
+.form-control:focus {
+  box-shadow: none;
+}

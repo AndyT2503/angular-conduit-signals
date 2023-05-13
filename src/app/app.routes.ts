@@ -15,6 +15,12 @@ export const routes: Routes = [
     canMatch: [nonAuthGuard],
   },
   {
+    path: 'editor',
+    loadChildren: () => import('./editor/editor.routes'),
+    canMatch: [authGuard],
+    title: 'Editor'
+  },
+  {
     path: 'settings',
     loadComponent: () => import('./setting/setting.component'),
     canMatch: [authGuard],

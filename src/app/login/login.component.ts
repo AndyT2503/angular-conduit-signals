@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
 import { provideComponentStore } from '@ngrx/component-store';
 import { LoginRequest } from '../shared/services';
 import { AuthStore } from '../shared/store';
-import { FormErrorsComponent, FormErrorsStore } from '../shared/ui/form-errors';
+import { FormErrorsComponent } from '../shared/ui/form-errors';
 import { TypedFormGroup } from '../shared/utils';
 
 @Component({
@@ -25,14 +25,10 @@ import { TypedFormGroup } from '../shared/utils';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [provideComponentStore(FormErrorsStore)],
 })
-export default class LoginComponent implements OnInit {
-  readonly #formErrorsStore = inject(FormErrorsStore);
+export default class LoginComponent {
   readonly #authStore = inject(AuthStore);
-  readonly #errorResponseChange$ = toObservable(
-    this.#authStore.selectors.errorResponse
-  ).pipe(takeUntilDestroyed());
+  readonly errorResponse= this.#authStore.selectors.errorResponse;
   readonly loginForm: TypedFormGroup<LoginRequest> = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,
@@ -42,16 +38,6 @@ export default class LoginComponent implements OnInit {
       nonNullable: true,
     }),
   });
-
-  ngOnInit(): void {
-    this.#handleErrorResponse();
-  }
-
-  #handleErrorResponse(): void {
-    this.#errorResponseChange$.subscribe((error) => {
-      this.#formErrorsStore.updateFormErrors(error);
-    });
-  }
 
   login(): void {
     this.#authStore.login(this.loginForm.getRawValue());

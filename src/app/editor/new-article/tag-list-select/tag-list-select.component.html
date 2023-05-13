@@ -1,0 +1,16 @@
+<input
+  type="text"
+  [(ngModel)]="tagInput"
+  (keyup.enter)="addTag()"
+  class="form-control"
+  placeholder="Enter tags"
+  (blur)="onTouched()"
+/>
+<div class="tag-list">
+  <ng-container *ngFor="let item of tagsSelected">
+    <div class="tag-default tag-pill">
+      <i class="fa-solid fa-xmark me-1 remove-icon" (click)="removeTag(item)"></i
+      >{{ item }}
+    </div>
+  </ng-container>
+</div>

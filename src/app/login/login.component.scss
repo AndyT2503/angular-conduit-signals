@@ -2,11 +2,11 @@
   text-align: center;
 
   .register {
-    color: var(--primary-color);
+    color: var(--green-color);
     text-decoration: none;
 
     &:hover {
-      color: var(--secondary-color);
+      color: var(--extra-green-color);
       text-decoration: underline;
     }
   }
@@ -20,14 +20,14 @@
 
     .sign-in-btn {
       margin-left: auto;
-      color: var(--default-color);
-      background-color: var(--primary-color);;
-      border-color: var(--primary-color);;
+      color: var(--white-color);
+      background-color: var(--green-color);;
+      border-color: var(--green-color);;
 
       &:hover {
-        color: var(--default-color);;
-        background-color: var(--secondary-color);
-        border-color: var(--secondary-color);
+        color: var(--white-color);;
+        background-color: var(--extra-green-color);
+        border-color: var(--extra-green-color);
       }
     }
   }

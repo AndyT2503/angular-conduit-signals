@@ -10,13 +10,13 @@
 
     .update-btn {
       margin-left: auto;
-      color: var(--default-color);
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
+      color: var(--white-color);
+      background-color: var(--green-color);
+      border-color: var(--green-color);
 
       &:hover {
-        background-color: var(--secondary-color);
-        border-color: var(--secondary-color);
+        background-color: var(--extra-green-color);
+        border-color: var(--extra-green-color);
       }
     }
 
