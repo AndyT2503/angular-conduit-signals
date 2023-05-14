@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 
@@ -19,15 +19,13 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
   ],
 })
 export class TagListSelectComponent implements ControlValueAccessor {
-  readonly #cdr = inject(ChangeDetectorRef);
   tagInput!: string;
-  tagsSelected: string[] = [];
+  tagsSelected = signal<string[]>([]);
   onChange = (value: string[]) => {};
   onTouched = () => {};
 
   writeValue(obj: string[]): void {
-    this.tagsSelected = obj;
-    this.#cdr.markForCheck();
+    this.tagsSelected.set(obj);
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -37,23 +35,23 @@ export class TagListSelectComponent implements ControlValueAccessor {
   }
 
   addTag(): void {
-    if(this.tagsSelected.some(tag => tag === this.tagInput)) {
+    if(this.tagsSelected().some(tag => tag === this.tagInput)) {
       return;
     }
-    if(!this.tagsSelected) {
-      this.tagsSelected = [this.tagInput];
+    if(!this.tagsSelected()) {
+      this.tagsSelected.set([this.tagInput]);
     } else {
-      this.tagsSelected.push(this.tagInput);
+      this.tagsSelected.update(value => [...value, this.tagInput]);
     }
     this.tagInput = '';
-    this.onChange(this.tagsSelected);
+    this.onChange(this.tagsSelected());
   }
 
   removeTag(value: string): void {
-    if(!this.tagsSelected.some(tag => tag === value)) {
+    if(!this.tagsSelected().some(tag => tag === value)) {
       return;
     }
-    this.tagsSelected = this.tagsSelected.filter(tag => tag !== value);
-    this.onChange(this.tagsSelected);
+    this.tagsSelected.update(tags => tags.filter(tag => tag !== value));
+    this.onChange(this.tagsSelected());
   }
 }

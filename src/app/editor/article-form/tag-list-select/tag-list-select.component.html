@@ -7,7 +7,7 @@
   (blur)="onTouched()"
 />
 <div class="tag-list">
-  <ng-container *ngFor="let item of tagsSelected">
+  <ng-container *ngFor="let item of tagsSelected()">
     <div class="tag-default tag-pill">
       <i class="fa-solid fa-xmark me-1 remove-icon" (click)="removeTag(item)"></i
       >{{ item }}
