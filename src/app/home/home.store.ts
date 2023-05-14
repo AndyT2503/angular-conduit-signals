@@ -1,7 +1,7 @@
 import { ViewportScroller } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
-import { Observable, switchMap, tap } from 'rxjs';
+import { Observable, defer, exhaustMap, switchMap, tap } from 'rxjs';
 import { DEFAULT_LIMIT } from '../shared/constants';
 import { Article, ArticlePagingResponse } from '../shared/models';
 import { ArticleGlobalQueryParams, ArticleService } from '../shared/services';
@@ -87,6 +87,27 @@ export class HomeStore
       this.#viewPort.scrollToPosition([0, 0]);
       this.#refreshPage();
     })
+  );
+
+  readonly toggleFavorite = this.effect<Article>(
+    exhaustMap((article) =>
+      defer(() => {
+        if (article.favorited) {
+          return this.#articleService.unfavoriteArticle(article.slug);
+        } else {
+          return this.#articleService.favoriteArticle(article.slug);
+        }
+      }).pipe(
+        tapResponse(
+          () => {
+            this.#refreshPage();
+          },
+          (error) => {
+            console.error('Toggle Favorite Failed', error);
+          }
+        )
+      )
+    )
   );
 
   readonly #refreshPage = this.effect<void>(

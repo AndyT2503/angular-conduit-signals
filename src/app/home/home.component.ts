@@ -13,6 +13,7 @@ import { PaginationComponent } from '../shared/ui/pagination';
 import { FEED_TYPE, FeedType, HomeStore } from './home.store';
 import { FeedToggleComponent } from './ui/feed-toggle/feed-toggle.component';
 import { TagsComponent } from './ui/tags/tags.component';
+import { Article } from '../shared/models';
 
 @Component({
   selector: 'app-home',
@@ -68,5 +69,9 @@ export default class HomeComponent implements OnInit {
 
   onPageOffsetChange(offset: number): void {
     this.#homeStore.onOffsetChange(offset);
+  }
+
+  toggleFavorite(article: Article): void {
+    this.#homeStore.toggleFavorite(article);
   }
 }

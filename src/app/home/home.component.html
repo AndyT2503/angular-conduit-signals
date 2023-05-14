@@ -8,7 +8,7 @@
 >
   <div class="col-9">
     <app-feed-toggle (toggleFeed)="toggleFeed($event)"></app-feed-toggle>
-    <app-article-list [articleList]="articleList"></app-article-list>
+    <app-article-list (toggleFavorite)="toggleFavorite($event)" [articleList]="articleList"></app-article-list>
     <app-pagination
       [totalCount]="articleCount"
       [offset]="currentOffset"

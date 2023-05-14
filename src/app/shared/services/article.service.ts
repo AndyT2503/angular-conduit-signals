@@ -19,7 +19,6 @@ export type ArticleGlobalQueryParams = PagingQueryParams & {
   favorited?: string;
 };
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -61,5 +60,18 @@ export class ArticleService {
         ...request,
       },
     });
+  }
+
+  favoriteArticle(slug: string): Observable<ArticlePagingResponse> {
+    return this.#httpClient.post<ArticlePagingResponse>(
+      `/articles/${slug}/favorite`,
+      {}
+    );
+  }
+
+  unfavoriteArticle(slug: string): Observable<ArticlePagingResponse> {
+    return this.#httpClient.delete<ArticlePagingResponse>(
+      `/articles/${slug}/favorite`
+    );
   }
 }
