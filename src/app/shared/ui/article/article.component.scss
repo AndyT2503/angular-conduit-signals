@@ -1,0 +1,95 @@
+.article-preview {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 0;
+  .article-meta {
+    display: flex;
+    align-items: center;
+    .avatar {
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      margin-right: 8px;
+      object-fit: cover;
+    }
+
+    .info {
+      line-height: 1rem;
+      .author {
+        color: #3d8b3d;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .date {
+        font-size: 12.8px;
+        color: rgb(187, 187, 187);
+        margin-bottom: 0;
+      }
+    }
+
+    .favorite-btn {
+      border: 1px solid #5cb85c;
+      color: #5cb85c;
+
+      &:hover {
+        color: #fff;
+        background-color: #5cb85c;
+      }
+    }
+
+    .unfavorite-btn {
+      background-color: #5cb85c;
+      color: #fff;
+      &:hover {
+        background-color: #419641;
+      }
+    }
+  }
+
+  .preview-link {
+    margin-top: 16px;
+    cursor: pointer;
+    .title {
+      font-size: 24px;
+    }
+    .description {
+      color: rgb(187, 187, 187);
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      .read-more {
+        font-size: 12.8px;
+        color: rgb(187, 187, 187);
+      }
+
+      .tags {
+        display: flex;
+        gap: 3px;
+        margin-left: auto;
+
+        .tag-default {
+          border: 1px solid #ddd;
+          color: #aaa !important;
+          background: none !important;
+        }
+      }
+    }
+  }
+}
+
+.tag-default {
+  font-size: 0.8rem;
+  padding: 0.1rem 0.6em;
+  white-space: nowrap;
+  margin-right: 3px;
+  margin-bottom: 0.2rem;
+  display: inline-block;
+  border-radius: 10rem;
+  text-decoration: none;
+  cursor: pointer;
+}

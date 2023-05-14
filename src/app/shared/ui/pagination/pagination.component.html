@@ -1,0 +1,13 @@
+<ul class="pagination" *ngIf="hasPagination()">
+  <ng-container
+    *ngFor="let item of [].constructor(totalPage()); let idx = index"
+  >
+    <li
+      (click)="offsetChange.emit(idx * limit())"
+      class="page-item"
+      [ngClass]="{ active: currentPageIndex() === idx + 1 }"
+    >
+      <a class="page-link">{{ idx + 1 }}</a>
+    </li></ng-container
+  >
+</ul>

@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -12,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { provideComponentStore } from '@ngrx/component-store';
 import { LoginRequest } from '../shared/services';
 import { AuthStore } from '../shared/store';
 import { FormErrorsComponent } from '../shared/ui/form-errors';
@@ -28,7 +21,7 @@ import { TypedFormGroup } from '../shared/utils';
 })
 export default class LoginComponent {
   readonly #authStore = inject(AuthStore);
-  readonly errorResponse= this.#authStore.selectors.errorResponse;
+  readonly errorResponse = this.#authStore.selectors.errorResponse;
   readonly loginForm: TypedFormGroup<LoginRequest> = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,

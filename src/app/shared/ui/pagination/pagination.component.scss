@@ -1,0 +1,31 @@
+.pagination {
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+
+  .page-item {
+    display: inline-block;
+
+    .page-link {
+      color: var(--green-color);
+    }
+
+    &:hover,
+    &:focus {
+      cursor: pointer;
+
+      .page-link {
+        text-decoration: underline;
+      }
+    }
+
+    &.active {
+      .page-link {
+        border: var(--green-color);
+        background-color: var(--green-color);
+        color: var(--white-color);
+      }
+    }
+  }
+}

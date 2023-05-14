@@ -7,11 +7,11 @@ import {
   Signal,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormErrorsComponent } from 'src/app/shared/ui/form-errors';
-import { TagListSelectComponent } from './tag-list-select/tag-list-select.component';
-import { UpsertArticleRequest } from 'src/app/shared/services';
-import { TypedFormGroup } from 'src/app/shared/utils';
 import { Article, ErrorResponse } from 'src/app/shared/models';
+import { UpsertArticleRequest } from 'src/app/shared/services';
+import { FormErrorsComponent } from 'src/app/shared/ui/form-errors';
+import { TypedFormGroup } from 'src/app/shared/utils';
+import { TagListSelectComponent } from './tag-list-select/tag-list-select.component';
 
 @Component({
   selector: 'app-article-form',

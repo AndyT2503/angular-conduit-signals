@@ -9,7 +9,6 @@ import { provideComponentStore } from '@ngrx/component-store';
 import { UpsertArticleRequest } from 'src/app/shared/services';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { EditArticleStore } from './edit-article.store';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-article',
@@ -21,14 +20,15 @@ import { ActivatedRoute } from '@angular/router';
   providers: [provideComponentStore(EditArticleStore)],
 })
 export default class EditArticleComponent implements OnInit {
-  @Input() slug?: string;
+  @Input() slug!: string;
   readonly #editArticleStore = inject(EditArticleStore);
   errorResponse = this.#editArticleStore.selectors.errorResponse;
   article = this.#editArticleStore.selectors.article;
 
   ngOnInit(): void {
-    this.#editArticleStore.getArticle(this.slug!);
+    this.#editArticleStore.getArticle(this.slug);
   }
+
   submit(value: UpsertArticleRequest): void {
     this.#editArticleStore.updateArticle(value);
   }

@@ -2,6 +2,11 @@ export interface ArticleAPIResponse {
   article: Article;
 }
 
+export interface ArticlePagingResponse {
+  articles: Article[];
+  articlesCount: number;
+}
+
 export interface Article {
   slug: string;
   title: string;

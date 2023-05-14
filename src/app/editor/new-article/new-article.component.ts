@@ -1,13 +1,8 @@
-import { FormErrorsComponent } from './../../shared/ui/form-errors/form-errors.component';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TypedFormGroup } from 'src/app/shared/utils';
 import { provideComponentStore } from '@ngrx/component-store';
-import { NewArticleStore } from './new-article.store';
 import { UpsertArticleRequest } from 'src/app/shared/services';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TagListSelectComponent } from '../article-form/tag-list-select/tag-list-select.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
+import { NewArticleStore } from './new-article.store';
 
 @Component({
   selector: 'app-new-article',

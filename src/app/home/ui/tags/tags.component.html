@@ -1,0 +1,10 @@
+<div class="side-bar">
+  <p>Popular Tags</p>
+  <div>
+    <ng-container *ngFor="let tag of tags()">
+      <span (click)="selectTag.emit(tag)" class="tag-default trending-tag">{{
+        tag
+      }}</span>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<ng-container *ngIf="articleList().length !== 0; else noArticle">
+  <ng-container *ngFor="let article of articleList()">
+    <app-article [article]="article" (toggleFavorite)="toggleFavorite.emit($event)"></app-article>
+  </ng-container>
+</ng-container>
+
+<ng-template #noArticle>
+  <div id="no-article" class="py-4">No articles are here... yet.</div>
+</ng-template>

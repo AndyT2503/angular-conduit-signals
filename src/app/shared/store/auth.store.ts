@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { switchMap, tap } from 'rxjs';
-import { StorageKey } from '../constants';
+import { STORAGE_KEY } from '../constants';
 import { ErrorResponse, User, UserAPIResponse } from '../models';
 import {
   LoginRequest,
@@ -27,7 +27,7 @@ export class AuthStore
   readonly #localStorage = inject(LocalStorageService);
   readonly #router = inject(Router);
   ngrxOnStoreInit(): void {
-    const user = this.#localStorage.getItem<User>(StorageKey.user);
+    const user = this.#localStorage.getItem<User>(STORAGE_KEY.user);
     this.setState({
       isAuthenticated: !!user,
       user: user,
@@ -37,7 +37,7 @@ export class AuthStore
 
   readonly #handleLoginAndRegisterRequest = {
     next: (res: UserAPIResponse) => {
-      this.#localStorage.setItem(StorageKey.user, res.user);
+      this.#localStorage.setItem(STORAGE_KEY.user, res.user);
       this.patchState({
         user: res.user,
         isAuthenticated: true,
@@ -74,7 +74,7 @@ export class AuthStore
 
   readonly logout = this.effect<void>(
     tap(() => {
-      this.#localStorage.removeItem(StorageKey.user);
+      this.#localStorage.removeItem(STORAGE_KEY.user);
       this.patchState({
         isAuthenticated: false,
         user: null,
@@ -88,7 +88,7 @@ export class AuthStore
       this.#authService.updateUserProfile(request).pipe(
         tapResponse({
           next: (res) => {
-            this.#localStorage.setItem(StorageKey.user, res.user);
+            this.#localStorage.setItem(STORAGE_KEY.user, res.user);
             this.patchState({
               user: res.user,
             });

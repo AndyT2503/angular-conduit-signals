@@ -1,0 +1,21 @@
+<div class="banner" *ngIf="!isAuthenticated()">
+  <h1 class="title">conduit</h1>
+  <p class="description">A place to share your knowledge</p>
+</div>
+<div
+  class="news-feed row"
+  [style.marginTop]="!isAuthenticated() ? '232px' : ''"
+>
+  <div class="col-9">
+    <app-feed-toggle (toggleFeed)="toggleFeed($event)"></app-feed-toggle>
+    <app-article-list [articleList]="articleList"></app-article-list>
+    <app-pagination
+      [totalCount]="articleCount"
+      [offset]="currentOffset"
+      (offsetChange)="onPageOffsetChange($event)"
+    ></app-pagination>
+  </div>
+  <div class="col-3">
+    <app-tags (selectTag)="selectTag($event)"></app-tags>
+  </div>
+</div>

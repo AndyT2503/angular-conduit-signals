@@ -1,0 +1,20 @@
+.banner {
+  background-color: var(--green-color);
+  text-align: center;
+  color: #fff;
+  padding: 2rem;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 58px;
+  .title {
+    font-family: var(--font-titillium);
+    font-size: 3.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .description {
+    font-size: 1.5rem;
+    font-weight: 300 !important;
+  }
+}

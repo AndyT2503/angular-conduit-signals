@@ -1,0 +1,19 @@
+.tag-default {
+  font-size: 0.8rem;
+  padding: 0.1rem 0.6em;
+  white-space: nowrap;
+  margin-right: 3px;
+  margin-bottom: 0.2rem;
+  display: inline-block;
+  border-radius: 10rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.trending-tag {
+  background-color: #818a91;
+  color: #fff !important;
+  &:hover {
+    background-color: #687077;
+  }
+}

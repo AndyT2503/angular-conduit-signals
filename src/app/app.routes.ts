@@ -26,4 +26,9 @@ export const routes: Routes = [
     canMatch: [authGuard],
     title: 'Settings'
   },
+  {
+    path: '',
+    loadComponent: () => import('./home/home.component'),
+    title: 'Home'
+  }
 ];
