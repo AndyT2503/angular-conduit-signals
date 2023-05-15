@@ -2,6 +2,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import {
   PreloadAllModules,
+  TitleStrategy,
   provideRouter,
   withComponentInputBinding,
   withHashLocation,
@@ -13,6 +14,7 @@ import { routes } from './app.routes';
 import { apiPrefixInterceptor, authInterceptor } from './shared/interceptors';
 import { AuthStore } from './shared/store';
 import { createInjectionToken } from './shared/utils';
+import { TitleStrategyService } from './shared/services';
 
 export interface EnvironmentConfig {
   apiUrl: string;
@@ -24,6 +26,10 @@ export const [injectEnvironmentConfig, provideEnvironmentConfig] =
 export const initAppConfig = (config: EnvironmentConfig): ApplicationConfig => {
   return {
     providers: [
+      {
+        provide: TitleStrategy,
+        useClass: TitleStrategyService,
+      },
       provideComponentStore(AuthStore),
       provideRouter(
         routes,
