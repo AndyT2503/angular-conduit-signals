@@ -1,0 +1,16 @@
+<div class="card-comment">
+  <div class="card-body">
+    <textarea
+      class="form-control"
+      placeholder="Write a comment..."
+      rows="3"
+      [(ngModel)]="comment"
+    ></textarea>
+  </div>
+  <div class="card-footer">
+    <img alt="avatar" [src]="avatar" class="avatar" />
+    <button class="btn bt-sm btn-submit" (click)="submit()">
+      Post Comment
+    </button>
+  </div>
+</div>

@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { provideComponentStore } from '@ngrx/component-store';
-import { UpsertArticleRequest } from 'src/app/shared/services';
+import { UpsertArticleBodyRequest } from 'src/app/shared/services';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { EditArticleStore } from './edit-article.store';
 
@@ -29,7 +29,7 @@ export default class EditArticleComponent implements OnInit {
     this.#editArticleStore.getArticle(this.slug);
   }
 
-  submit(value: UpsertArticleRequest): void {
+  submit(value: UpsertArticleBodyRequest): void {
     this.#editArticleStore.updateArticle(value);
   }
 }

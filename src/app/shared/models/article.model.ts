@@ -1,8 +1,10 @@
+import { Author } from "./user.model";
+
 export interface ArticleAPIResponse {
   article: Article;
 }
 
-export interface ArticlePagingResponse {
+export interface ArticlePagingAPIResponse {
   articles: Article[];
   articlesCount: number;
 }
@@ -18,11 +20,4 @@ export interface Article {
   favorited: boolean;
   favoritesCount: number;
   author: Author;
-}
-
-interface Author {
-  username: string;
-  bio: string;
-  image: string;
-  following: boolean;
 }

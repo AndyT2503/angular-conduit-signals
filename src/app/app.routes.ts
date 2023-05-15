@@ -18,17 +18,21 @@ export const routes: Routes = [
     path: 'editor',
     loadChildren: () => import('./editor/editor.routes'),
     canMatch: [authGuard],
-    title: 'Editor'
+    title: 'Editor',
   },
   {
     path: 'settings',
     loadComponent: () => import('./setting/setting.component'),
     canMatch: [authGuard],
-    title: 'Settings'
+    title: 'Settings',
+  },
+  {
+    path: 'article/:slug',
+    loadComponent: () => import('./article-detail/article-detail.component'),
   },
   {
     path: '',
     loadComponent: () => import('./home/home.component'),
-    title: 'Home'
-  }
+    title: 'Home',
+  },
 ];

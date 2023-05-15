@@ -1,14 +1,17 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
 import {
   Article,
   ArticleAPIResponse,
-  ArticlePagingResponse,
-  PagingParams as PagingQueryParams,
+  ArticlePagingAPIResponse,
+  Comment,
+  CommentAPIResponse,
+  CommentListAPIResponse,
+  PagingParams as PagingQueryParams
 } from '../models';
 
-export type UpsertArticleRequest = Pick<
+export type UpsertArticleBodyRequest = Pick<
   Article,
   'title' | 'description' | 'body' | 'tagList'
 >;
@@ -19,13 +22,17 @@ export type ArticleGlobalQueryParams = PagingQueryParams & {
   favorited?: string;
 };
 
+export type InsertCommentBodyRequest = Pick<Comment, 'body'>;
+
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
   readonly #httpClient = inject(HttpClient);
 
-  createArticle(article: UpsertArticleRequest): Observable<ArticleAPIResponse> {
+  createArticle(
+    article: UpsertArticleBodyRequest
+  ): Observable<ArticleAPIResponse> {
     return this.#httpClient.post<ArticleAPIResponse>('/articles', {
       article,
     });
@@ -33,19 +40,45 @@ export class ArticleService {
 
   updateArticle(
     slug: string,
-    article: UpsertArticleRequest
+    article: UpsertArticleBodyRequest
   ): Observable<ArticleAPIResponse> {
     return this.#httpClient.put<ArticleAPIResponse>(`/articles/${slug}`, {
       article,
     });
   }
 
+  deleteArticle(slug: string): Observable<Object> {
+    return this.#httpClient.delete(`/articles/${slug}`);
+  }
+
+  getCommentsForArticle(slug: string): Observable<CommentListAPIResponse> {
+    return this.#httpClient.get<CommentListAPIResponse>(
+      `/articles/${slug}/comments`
+    );
+  }
+
+  createCommentForArticle(
+    slug: string,
+    comment: InsertCommentBodyRequest
+  ): Observable<CommentAPIResponse> {
+    return this.#httpClient.post<CommentAPIResponse>(
+      `/articles/${slug}/comments`,
+      {
+        comment,
+      }
+    );
+  }
+
+  deleteCommentForArticle(slug: string, id: string): Observable<Object> {
+    return this.#httpClient.delete(`/articles/${slug}/comments/${id}`);
+  }
+
   getArticleDetail(slug: string): Observable<ArticleAPIResponse> {
     return this.#httpClient.get<ArticleAPIResponse>(`/articles/${slug}`);
   }
 
-  getFeed(request: PagingQueryParams): Observable<ArticlePagingResponse> {
-    return this.#httpClient.get<ArticlePagingResponse>('/articles/feed', {
+  getFeed(request: PagingQueryParams): Observable<ArticlePagingAPIResponse> {
+    return this.#httpClient.get<ArticlePagingAPIResponse>('/articles/feed', {
       params: {
         ...request,
       },
@@ -54,23 +87,23 @@ export class ArticleService {
 
   getArticleGlobal(
     request: ArticleGlobalQueryParams
-  ): Observable<ArticlePagingResponse> {
-    return this.#httpClient.get<ArticlePagingResponse>('/articles', {
+  ): Observable<ArticlePagingAPIResponse> {
+    return this.#httpClient.get<ArticlePagingAPIResponse>('/articles', {
       params: {
         ...request,
       },
     });
   }
 
-  favoriteArticle(slug: string): Observable<ArticlePagingResponse> {
-    return this.#httpClient.post<ArticlePagingResponse>(
+  favoriteArticle(slug: string): Observable<ArticlePagingAPIResponse> {
+    return this.#httpClient.post<ArticlePagingAPIResponse>(
       `/articles/${slug}/favorite`,
       {}
     );
   }
 
-  unfavoriteArticle(slug: string): Observable<ArticlePagingResponse> {
-    return this.#httpClient.delete<ArticlePagingResponse>(
+  unfavoriteArticle(slug: string): Observable<ArticlePagingAPIResponse> {
+    return this.#httpClient.delete<ArticlePagingAPIResponse>(
       `/articles/${slug}/favorite`
     );
   }

@@ -11,9 +11,9 @@
 }
 
 .trending-tag {
-  background-color: #818a91;
-  color: #fff !important;
+  background-color: var(--gray-color);
+  color: var(--white-color) !important;
   &:hover {
-    background-color: #687077;
+    background-color: var(--extra-gray-color);
   }
 }

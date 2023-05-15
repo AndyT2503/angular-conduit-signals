@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { exhaustMap, switchMap } from 'rxjs';
 import { Article, ErrorResponse } from 'src/app/shared/models';
-import { ArticleService, UpsertArticleRequest } from 'src/app/shared/services';
+import { ArticleService, UpsertArticleBodyRequest } from 'src/app/shared/services';
 import { AuthStore } from 'src/app/shared/store';
 import { ComponentStoreWithSelectors } from 'src/app/shared/utils';
 
@@ -47,7 +47,7 @@ export class EditArticleStore
     )
   );
 
-  readonly updateArticle = this.effect<UpsertArticleRequest>(
+  readonly updateArticle = this.effect<UpsertArticleBodyRequest>(
     exhaustMap((request) =>
       this.#articleService
         .updateArticle(this.selectors.article().slug, request)

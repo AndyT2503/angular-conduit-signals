@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { Observable, defer, exhaustMap, switchMap, tap } from 'rxjs';
 import { DEFAULT_LIMIT } from '../shared/constants';
-import { Article, ArticlePagingResponse } from '../shared/models';
+import { Article, ArticlePagingAPIResponse } from '../shared/models';
 import { ArticleGlobalQueryParams, ArticleService } from '../shared/services';
 import { TagService } from '../shared/services/tag.service';
 import { ComponentStoreWithSelectors, ObjectValues } from '../shared/utils';
@@ -128,7 +128,7 @@ export class HomeStore
     })
   );
 
-  #loadArticle(): Observable<ArticlePagingResponse> {
+  #loadArticle(): Observable<ArticlePagingAPIResponse> {
     switch (this.selectors.feedTypeSelected()) {
       case FEED_TYPE.tagFeed:
         return this.#articleService.getArticleGlobal({

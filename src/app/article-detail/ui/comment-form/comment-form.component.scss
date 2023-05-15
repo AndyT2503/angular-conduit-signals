@@ -1,0 +1,36 @@
+.card-comment {
+  border-radius: 0.25rem;
+  border: 1px solid var(--extra-white-gray-color);
+  textarea {
+    border: none;
+
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+  .card-footer {
+    border-top: 1px solid var(--extra-white-gray-color);
+    padding: 0.75rem 1.25rem;
+    background-color: var(--white-gray-color);
+    display: flex;
+    .avatar {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .btn-submit {
+      margin-left: auto;
+      color: var(--white-color);
+      background-color: var(--green-color);
+      border-color: var(--green-color);
+
+      &:hover {
+        background-color: var(--extra-green-color);
+        border-color: var(--extra-green-color);
+      }
+    }
+  }
+}

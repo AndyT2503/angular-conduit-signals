@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { provideComponentStore } from '@ngrx/component-store';
-import { UpsertArticleRequest } from 'src/app/shared/services';
+import { UpsertArticleBodyRequest } from 'src/app/shared/services';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { NewArticleStore } from './new-article.store';
 
@@ -17,7 +17,7 @@ export default class NewArticleComponent {
   readonly #newArticleStore = inject(NewArticleStore);
   readonly errorResponse = this.#newArticleStore.selectors.errorResponse;
 
-  submit(value: UpsertArticleRequest): void {
+  submit(value: UpsertArticleBodyRequest): void {
     this.#newArticleStore.createNewArticle(value);
   }
 }

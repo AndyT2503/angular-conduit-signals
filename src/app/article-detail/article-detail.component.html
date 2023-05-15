@@ -1,0 +1,94 @@
+<ng-container *ngIf="article().title">
+  <div class="banner">
+    <div class="container">
+      <h1 class="title">{{ article().title }}</h1>
+      <ng-container
+        [ngTemplateOutlet]="articleMeta"
+        [ngTemplateOutletContext]="{ type: 'header' }"
+      ></ng-container>
+    </div>
+  </div>
+  <div class="content">
+    <div class="article-content">
+      <div [innerHtml]="article().body | markdown"></div>
+    </div>
+    <div class="tags">
+      <ng-container *ngFor="let tag of article().tagList"
+        ><span class="tag-default">{{ tag }}</span>
+      </ng-container>
+    </div>
+  </div>
+  <hr class="mt-5" />
+  <div class="mt-4 mb-5 d-flex justify-content-center">
+    <ng-container
+      [ngTemplateOutlet]="articleMeta"
+      [ngTemplateOutletContext]="{ type: 'body' }"
+    ></ng-container>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-8 offset-md-2">
+      <app-comment-form
+        *ngIf="isAuthenticated(); else requireLogin"
+      ></app-comment-form>
+      <ng-template #requireLogin>
+        <p>
+          <a class="link" routerLink="/login">Sign in</a> or
+          <a class="link" routerLink="/register">sign up</a> to add comments on
+          this article.
+        </p>
+      </ng-template>
+      <app-comment-list></app-comment-list>
+    </div>
+  </div>
+
+  <ng-template #articleMeta let-type="type">
+    <div class="article-meta">
+      <img alt="avatar" class="avatar" [src]="article().author.image" />
+      <div class="info">
+        <a
+          [routerLink]="['/@' + article().author.username]"
+          class="author"
+          [style.color]="type === 'header' ? '#fff' : '#5CB85C'"
+          >{{ article().author.username }}</a
+        >
+        <p class="date">{{ article().createdAt | date : "MMMM d, y" }}</p>
+      </div>
+      <div class="group-btn">
+        <ng-container
+          *ngIf="
+            currentUser()?.username !== article().author.username;
+            else editTmp
+          "
+        >
+          <button class="btn btn-outline-secondary btn-sm">
+            <i class="fa-solid fa-plus"></i> Follow
+            {{ article().author.username }}
+          </button>
+          <button
+            class="btn favorite-btn btn-sm"
+            [ngClass]="article().favorited ? 'unfavorite-btn' : 'favorite-btn'"
+            (click)="toggleFavorite(article())"
+          >
+            <i class="fa-solid fa-heart"></i> Favorite Article ({{
+              article().favoritesCount
+            }})
+          </button>
+        </ng-container>
+        <ng-template #editTmp>
+          <button
+            class="btn btn-outline-secondary btn-sm"
+            [routerLink]="['/editor', article().slug]"
+          >
+            <i class="fa-solid fa-pen"></i> Edit Article
+          </button>
+          <button
+            class="btn btn-outline-danger btn-sm"
+            (click)="deleteArticle(article())"
+          >
+            <i class="fa-solid fa-trash-can"></i> Delete Article
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Article, ErrorResponse } from 'src/app/shared/models';
-import { UpsertArticleRequest } from 'src/app/shared/services';
+import { UpsertArticleBodyRequest } from 'src/app/shared/services';
 import { FormErrorsComponent } from 'src/app/shared/ui/form-errors';
 import { TypedFormGroup } from 'src/app/shared/utils';
 import { TagListSelectComponent } from './tag-list-select/tag-list-select.component';
@@ -22,7 +22,7 @@ import { TagListSelectComponent } from './tag-list-select/tag-list-select.compon
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleFormComponent {
-  readonly articleForm: TypedFormGroup<UpsertArticleRequest> = new FormGroup({
+  readonly articleForm: TypedFormGroup<UpsertArticleBodyRequest> = new FormGroup({
     title: new FormControl('', {
       nonNullable: true,
     }),
@@ -47,5 +47,5 @@ export class ArticleFormComponent {
       });
     }
   }
-  @Output() submit = new EventEmitter<UpsertArticleRequest>();
+  @Output() submit = new EventEmitter<UpsertArticleBodyRequest>();
 }

@@ -31,20 +31,20 @@
     }
 
     .favorite-btn {
-      border: 1px solid #5cb85c;
-      color: #5cb85c;
+      border: 1px solid var(--green-color);
+      color: var(--green-color);
 
       &:hover {
-        color: #fff;
-        background-color: #5cb85c;
+        color: var(--white-color);
+        background-color: var(--green-color);
       }
     }
 
     .unfavorite-btn {
-      background-color: #5cb85c;
-      color: #fff;
+      background-color: var(--green-color);
+      color: var(--white-color);
       &:hover {
-        background-color: #419641;
+        background-color: var(--extra-green-color);
       }
     }
   }
@@ -56,7 +56,7 @@
       font-size: 24px;
     }
     .description {
-      color: rgb(187, 187, 187);
+      color: var(--extra-white-gray-color);
     }
 
     .footer {
@@ -64,7 +64,7 @@
       align-items: center;
       .read-more {
         font-size: 12.8px;
-        color: rgb(187, 187, 187);
+        color: var(--extra-white-gray-color);
       }
 
       .tags {
@@ -73,8 +73,8 @@
         margin-left: auto;
 
         .tag-default {
-          border: 1px solid #ddd;
-          color: #aaa !important;
+          border: 1px solid var(--white-gray-color);
+          color: var(--extra-white-gray-color) !important;
           background: none !important;
         }
       }

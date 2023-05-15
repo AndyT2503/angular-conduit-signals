@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { LoginRequest } from '../shared/services';
+import { LoginBodyRequest } from '../shared/services';
 import { AuthStore } from '../shared/store';
 import { FormErrorsComponent } from '../shared/ui/form-errors';
 import { TypedFormGroup } from '../shared/utils';
@@ -22,7 +22,7 @@ import { TypedFormGroup } from '../shared/utils';
 export default class LoginComponent {
   readonly #authStore = inject(AuthStore);
   readonly errorResponse = this.#authStore.selectors.errorResponse;
-  readonly loginForm: TypedFormGroup<LoginRequest> = new FormGroup({
+  readonly loginForm: TypedFormGroup<LoginBodyRequest> = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.email],

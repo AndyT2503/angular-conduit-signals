@@ -1,0 +1,18 @@
+<div class="comment-list">
+  <ng-container *ngFor="let comment of commentList()">
+    <div class="card-comment">
+      <div class="card-body">
+        <p>
+          {{ comment.body }}
+        </p>
+      </div>
+      <div class="card-footer">
+        <img alt="avatar" [src]="comment.author.image" class="avatar" />
+        <a class="author" [routerLink]="['/@' + comment.author.username]">{{
+          comment.author.username
+        }}</a>
+        <p class="date">{{ comment.createdAt | date : "MMMM d, y" }}</p>
+      </div>
+    </div>
+  </ng-container>
+</div>

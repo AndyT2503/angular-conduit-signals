@@ -6,9 +6,9 @@ import { switchMap, tap } from 'rxjs';
 import { STORAGE_KEY } from '../constants';
 import { ErrorResponse, User, UserAPIResponse } from '../models';
 import {
-  LoginRequest,
-  RegisterRequest,
-  UpdateProfileRequest,
+  LoginBodyRequest,
+  RegisterBodyRequest,
+  UpdateProfileBodyRequest,
   UserAndAuthenticationService,
 } from '../services';
 import { ComponentStoreWithSelectors, LocalStorageService } from '../utils';
@@ -56,7 +56,7 @@ export class AuthStore
     },
   };
 
-  readonly login = this.effect<LoginRequest>(
+  readonly login = this.effect<LoginBodyRequest>(
     switchMap((request) =>
       this.#authService
         .login(request)
@@ -64,7 +64,7 @@ export class AuthStore
     )
   );
 
-  readonly register = this.effect<RegisterRequest>(
+  readonly register = this.effect<RegisterBodyRequest>(
     switchMap((request) =>
       this.#authService
         .register(request)
@@ -83,7 +83,7 @@ export class AuthStore
     })
   );
 
-  readonly updateProfile = this.effect<UpdateProfileRequest>(
+  readonly updateProfile = this.effect<UpdateProfileBodyRequest>(
     switchMap((request) =>
       this.#authService.updateUserProfile(request).pipe(
         tapResponse({

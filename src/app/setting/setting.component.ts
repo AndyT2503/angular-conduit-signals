@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { UpdateProfileRequest } from '../shared/services';
+import { UpdateProfileBodyRequest } from '../shared/services';
 import { AuthStore } from '../shared/store';
 import { TypedFormGroup } from '../shared/utils';
 
@@ -19,7 +19,7 @@ import { TypedFormGroup } from '../shared/utils';
 })
 export default class SettingComponent implements OnInit {
   readonly #authStore = inject(AuthStore);
-  readonly settingForm: TypedFormGroup<UpdateProfileRequest> = new FormGroup({
+  readonly settingForm: TypedFormGroup<UpdateProfileBodyRequest> = new FormGroup({
     bio: new FormControl('', {
       nonNullable: true,
     }),

@@ -3,13 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { User, UserAPIResponse } from '../models';
 import { Observable } from 'rxjs';
 
-export type LoginRequest = Pick<User, 'email'> & { password: string };
+export type LoginBodyRequest = Pick<User, 'email'> & { password: string };
 
-export type RegisterRequest = Pick<User, 'email' | 'username'> & {
+export type RegisterBodyRequest = Pick<User, 'email' | 'username'> & {
   password: string;
 };
 
-export type UpdateProfileRequest = Pick<
+export type UpdateProfileBodyRequest = Pick<
   User,
   'email' | 'username' | 'bio' | 'image'
 > & { password: string };
@@ -20,13 +20,13 @@ export type UpdateProfileRequest = Pick<
 export class UserAndAuthenticationService {
   readonly #httpClient = inject(HttpClient);
 
-  login(user: LoginRequest): Observable<UserAPIResponse> {
+  login(user: LoginBodyRequest): Observable<UserAPIResponse> {
     return this.#httpClient.post<UserAPIResponse>('/users/login', {
       user,
     });
   }
 
-  register(user: RegisterRequest): Observable<UserAPIResponse> {
+  register(user: RegisterBodyRequest): Observable<UserAPIResponse> {
     return this.#httpClient.post<UserAPIResponse>('/users', {
       user,
     });
@@ -36,7 +36,7 @@ export class UserAndAuthenticationService {
     return this.#httpClient.get<UserAPIResponse>('/user');
   }
 
-  updateUserProfile(user: UpdateProfileRequest): Observable<UserAPIResponse> {
+  updateUserProfile(user: UpdateProfileBodyRequest): Observable<UserAPIResponse> {
     return this.#httpClient.put<UserAPIResponse>('/user', {
       user,
     });
