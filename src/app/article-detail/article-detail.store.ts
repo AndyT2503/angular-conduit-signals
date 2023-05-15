@@ -2,8 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { defer, exhaustMap, switchMap } from 'rxjs';
-import { Article, Comment } from '../shared/models';
-import { ArticleService, InsertCommentBodyRequest } from '../shared/services';
+import { Article, Comment, Profile } from '../shared/models';
+import {
+  ArticleService,
+  InsertCommentBodyRequest,
+  ProfileService,
+} from '../shared/services';
 import { ComponentStoreWithSelectors } from '../shared/utils';
 import { Title } from '@angular/platform-browser';
 
@@ -17,6 +21,7 @@ export class ArticleDetailStore
   extends ComponentStoreWithSelectors<ArticleDetailState>
   implements OnStoreInit
 {
+  readonly #profileService = inject(ProfileService);
   readonly #articleService = inject(ArticleService);
   readonly #router = inject(Router);
   readonly #title = inject(Title);
@@ -133,6 +138,27 @@ export class ArticleDetailStore
           },
           (error) => {
             console.error('Delete Article Failed', error);
+          }
+        )
+      )
+    )
+  );
+
+  readonly toggleFollow = this.effect<Article>(
+    exhaustMap((article) =>
+      defer(() => {
+        if (article.author.following) {
+          return this.#profileService.unfollowUser(article.author.username);
+        } else {
+          return this.#profileService.followUser(article.author.username);
+        }
+      }).pipe(
+        tapResponse(
+          () => {
+            this.getArticleDetail(article.slug);
+          },
+          (error) => {
+            console.error('Toggle Follow User Failed', error);
           }
         )
       )

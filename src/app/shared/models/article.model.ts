@@ -1,4 +1,4 @@
-import { Author } from "./user.model";
+import { Profile } from "./profile.model";
 
 export interface ArticleAPIResponse {
   article: Article;
@@ -19,5 +19,5 @@ export interface Article {
   updatedAt: string;
   favorited: boolean;
   favoritesCount: number;
-  author: Author;
+  author: Profile;
 }

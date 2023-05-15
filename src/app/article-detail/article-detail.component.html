@@ -60,8 +60,8 @@
             else editTmp
           "
         >
-          <button class="btn btn-outline-secondary btn-sm">
-            <i class="fa-solid fa-plus"></i> Follow
+          <button class="btn btn-outline-secondary btn-sm" (click)="toggleFollowAuthor(article())">
+            <i class="fa-solid fa-plus"></i> {{ article().author.following ? 'Unfollow' : 'Follow'}}
             {{ article().author.username }}
           </button>
           <button

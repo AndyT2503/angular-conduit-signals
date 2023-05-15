@@ -1,4 +1,4 @@
-import { Author } from './user.model';
+import { Profile } from './profile.model';
 
 export interface CommentAPIResponse {
   comment: Comment;
@@ -13,5 +13,5 @@ export interface Comment {
   createdAt: string;
   updatedAt: string;
   body: string;
-  author: Author;
+  author: Profile;
 }
