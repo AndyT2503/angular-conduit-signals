@@ -12,6 +12,12 @@
           comment.author.username
         }}</a>
         <p class="date">{{ comment.createdAt | date : "MMMM d, y" }}</p>
+        <a
+          class="delete-btn"
+          *ngIf="currentUser()?.username === comment.author.username"
+          (click)="onDeleteComment(comment.id)"
+          ><i class="fa-solid fa-trash"></i
+        ></a>
       </div>
     </div>
   </ng-container>

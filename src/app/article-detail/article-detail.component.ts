@@ -52,9 +52,11 @@ export default class ArticleDetailComponent implements OnInit {
     this.#articleStore.getArticleDetail(this.slug);
   }
 
-  //TODO: implement later
-  toggleFavorite(article: Article) {}
+  toggleFavorite(article: Article) {
+    this.#articleStore.toggleFavorite(article);
+  }
 
-  //TODO: implement later
-  deleteArticle(article: Article) {}
+  deleteArticle(article: Article) {
+    this.#articleStore.deleteArticle(article.slug)
+  }
 }

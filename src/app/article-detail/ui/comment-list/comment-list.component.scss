@@ -40,6 +40,16 @@
       color: var(--gray-color);
       margin-bottom: 0;
     }
+
+    .delete-btn {
+      margin-left: auto;
+      cursor: pointer;
+      color: var(--extra-white-gray-color);
+
+      &:hover {
+        color: var(--extra-gray-color);
+      }
+    }
   }
 }
 

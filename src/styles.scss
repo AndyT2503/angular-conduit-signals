@@ -4,7 +4,25 @@ body {
   font-family: var(--font-source-sans);
 }
 
-
 .form-control:focus {
   box-shadow: none;
+}
+
+.favorite-btn {
+  border: 1px solid var(--green-color);
+  color: var(--green-color);
+
+  &:hover {
+    color: var(--white-color);
+    background-color: var(--green-color);
+  }
+}
+
+.unfavorite-btn {
+  background-color: var(--green-color);
+  color: var(--white-color);
+  &:hover {
+    color: var(--white-color);
+    background-color: var(--extra-green-color);
+  }
 }

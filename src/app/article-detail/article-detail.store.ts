@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
-import { switchMap } from 'rxjs';
+import { defer, exhaustMap, switchMap } from 'rxjs';
 import { Article, Comment } from '../shared/models';
 import { ArticleService, InsertCommentBodyRequest } from '../shared/services';
 import { ComponentStoreWithSelectors } from '../shared/utils';
+import { Title } from '@angular/platform-browser';
 
 interface ArticleDetailState {
   article: Article;
@@ -18,6 +19,7 @@ export class ArticleDetailStore
 {
   readonly #articleService = inject(ArticleService);
   readonly #router = inject(Router);
+  readonly #title = inject(Title);
   ngrxOnStoreInit(): void {
     this.setState({
       article: {} as Article,
@@ -30,6 +32,7 @@ export class ArticleDetailStore
       this.#articleService.getArticleDetail(slug).pipe(
         tapResponse(
           (response) => {
+            this.#title.setTitle(`${response.article.title} - Conduit`);
             this.patchState({
               article: response.article,
             });
@@ -84,7 +87,7 @@ export class ArticleDetailStore
     slug: string;
     commentId: string;
   }>(
-    switchMap((request) =>
+    exhaustMap((request) =>
       this.#articleService
         .deleteCommentForArticle(request.slug, request.commentId)
         .pipe(
@@ -97,6 +100,42 @@ export class ArticleDetailStore
             }
           )
         )
+    )
+  );
+
+  readonly toggleFavorite = this.effect<Article>(
+    exhaustMap((article) =>
+      defer(() => {
+        if (article.favorited) {
+          return this.#articleService.unfavoriteArticle(article.slug);
+        } else {
+          return this.#articleService.favoriteArticle(article.slug);
+        }
+      }).pipe(
+        tapResponse(
+          () => {
+            this.getArticleDetail(article.slug);
+          },
+          (error) => {
+            console.error('Toggle Favorite Failed', error);
+          }
+        )
+      )
+    )
+  );
+
+  readonly deleteArticle = this.effect<string>(
+    exhaustMap((slug) =>
+      this.#articleService.deleteArticle(slug).pipe(
+        tapResponse(
+          () => {
+            this.#router.navigate(['/']);
+          },
+          (error) => {
+            console.error('Delete Article Failed', error);
+          }
+        )
+      )
     )
   );
 }

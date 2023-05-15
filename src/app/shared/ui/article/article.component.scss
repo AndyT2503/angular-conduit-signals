@@ -29,24 +29,6 @@
         margin-bottom: 0;
       }
     }
-
-    .favorite-btn {
-      border: 1px solid var(--green-color);
-      color: var(--green-color);
-
-      &:hover {
-        color: var(--white-color);
-        background-color: var(--green-color);
-      }
-    }
-
-    .unfavorite-btn {
-      background-color: var(--green-color);
-      color: var(--white-color);
-      &:hover {
-        background-color: var(--extra-green-color);
-      }
-    }
   }
 
   .preview-link {
@@ -56,7 +38,9 @@
       font-size: 24px;
     }
     .description {
-      color: var(--extra-white-gray-color);
+      font-size: 1rem;
+      line-height: 1.3rem;
+      color: var(--gray-color);
     }
 
     .footer {
@@ -73,8 +57,8 @@
         margin-left: auto;
 
         .tag-default {
-          border: 1px solid var(--white-gray-color);
-          color: var(--extra-white-gray-color) !important;
+          border: 1px solid var(--extra-white-gray-color);
+          color: var(--gray-color) !important;
           background: none !important;
         }
       }

@@ -50,16 +50,6 @@
     display: flex;
     gap: 6px;
     margin-left: 16px;
-
-    .favorite-btn {
-      border: 1px solid var(--green-color);
-      color: var(--green-color);
-
-      &:hover {
-        color: var(--white-color);
-        background-color: var(--green-color);
-      }
-    }
   }
 }
 
