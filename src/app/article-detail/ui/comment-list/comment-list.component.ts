@@ -2,13 +2,11 @@ import { DatePipe, NgFor, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  inject,
-  Input,
-  OnInit,
+  inject, OnInit
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ArticleDetailStore } from '../../article-detail.store';
 import { AuthStore } from 'src/app/shared/store';
+import { ArticleDetailStore } from '../../article-detail.store';
 
 @Component({
   selector: 'app-comment-list',

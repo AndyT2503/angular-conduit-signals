@@ -22,8 +22,8 @@ import { EditArticleStore } from './edit-article.store';
 export default class EditArticleComponent implements OnInit {
   @Input() slug!: string;
   readonly #editArticleStore = inject(EditArticleStore);
-  errorResponse = this.#editArticleStore.selectors.errorResponse;
-  article = this.#editArticleStore.selectors.article;
+  readonly errorResponse = this.#editArticleStore.selectors.errorResponse;
+  readonly article = this.#editArticleStore.selectors.article;
 
   ngOnInit(): void {
     this.#editArticleStore.getArticle(this.slug);

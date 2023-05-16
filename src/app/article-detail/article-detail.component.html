@@ -1,7 +1,7 @@
-<ng-container *ngIf="article().title">
+<ng-container *ngIf="article() as article">
   <div class="banner">
     <div class="container">
-      <h1 class="title">{{ article().title }}</h1>
+      <h1 class="title">{{ article.title }}</h1>
       <ng-container
         [ngTemplateOutlet]="articleMeta"
         [ngTemplateOutletContext]="{ type: 'header' }"
@@ -10,10 +10,10 @@
   </div>
   <div class="content">
     <div class="article-content">
-      <div [innerHtml]="article().body | markdown"></div>
+      <div [innerHtml]="article.body | markdown"></div>
     </div>
     <div class="tags">
-      <ng-container *ngFor="let tag of article().tagList"
+      <ng-container *ngFor="let tag of article.tagList"
         ><span class="tag-default">{{ tag }}</span>
       </ng-container>
     </div>
@@ -43,47 +43,47 @@
 
   <ng-template #articleMeta let-type="type">
     <div class="article-meta">
-      <img alt="avatar" class="avatar" [src]="article().author.image" />
+      <img alt="avatar" class="avatar" [src]="article.author.image" />
       <div class="info">
         <a
-          [routerLink]="['/@' + article().author.username]"
+          [routerLink]="['/@' + article.author.username]"
           class="author"
           [style.color]="type === 'header' ? '#fff' : '#5CB85C'"
-          >{{ article().author.username }}</a
+          >{{ article.author.username }}</a
         >
-        <p class="date">{{ article().createdAt | date : "MMMM d, y" }}</p>
+        <p class="date">{{ article.createdAt | date : "MMMM d, y" }}</p>
       </div>
       <div class="group-btn">
         <ng-container
           *ngIf="
-            currentUser()?.username !== article().author.username;
+            currentUser()?.username !== article.author.username;
             else editTmp
           "
         >
-          <button class="btn btn-outline-secondary btn-sm" (click)="toggleFollowAuthor(article())">
-            <i class="fa-solid fa-plus"></i> {{ article().author.following ? 'Unfollow' : 'Follow'}}
-            {{ article().author.username }}
+          <button class="btn btn-outline-secondary btn-sm" (click)="toggleFollowAuthor(article)">
+            <i class="fa-solid fa-plus"></i> {{ article.author.following ? 'Unfollow' : 'Follow'}}
+            {{ article.author.username }}
           </button>
           <button
             class="btn favorite-btn btn-sm"
-            [ngClass]="article().favorited ? 'unfavorite-btn' : 'favorite-btn'"
-            (click)="toggleFavorite(article())"
+            [ngClass]="article.favorited ? 'unfavorite-btn' : 'favorite-btn'"
+            (click)="toggleFavorite(article)"
           >
             <i class="fa-solid fa-heart"></i> Favorite Article ({{
-              article().favoritesCount
+              article.favoritesCount
             }})
           </button>
         </ng-container>
         <ng-template #editTmp>
           <button
             class="btn btn-outline-secondary btn-sm"
-            [routerLink]="['/editor', article().slug]"
+            [routerLink]="['/editor', article.slug]"
           >
             <i class="fa-solid fa-pen"></i> Edit Article
           </button>
           <button
             class="btn btn-outline-danger btn-sm"
-            (click)="deleteArticle(article())"
+            (click)="deleteArticle(article)"
           >
             <i class="fa-solid fa-trash-can"></i> Delete Article
           </button>

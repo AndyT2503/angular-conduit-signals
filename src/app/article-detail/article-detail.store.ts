@@ -1,18 +1,18 @@
 import { inject, Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { defer, exhaustMap, switchMap } from 'rxjs';
-import { Article, Comment, Profile } from '../shared/models';
+import { Article, Comment } from '../shared/models';
 import {
   ArticleService,
   InsertCommentBodyRequest,
-  ProfileService,
+  ProfileService
 } from '../shared/services';
 import { ComponentStoreWithSelectors } from '../shared/utils';
-import { Title } from '@angular/platform-browser';
 
 interface ArticleDetailState {
-  article: Article;
+  article: Article | null;
   comments: Comment[];
 }
 
@@ -27,7 +27,7 @@ export class ArticleDetailStore
   readonly #title = inject(Title);
   ngrxOnStoreInit(): void {
     this.setState({
-      article: {} as Article,
+      article: null,
       comments: [],
     });
   }

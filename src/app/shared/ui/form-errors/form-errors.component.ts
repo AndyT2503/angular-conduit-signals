@@ -1,11 +1,8 @@
 import { NgFor, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  Component,
-  Input,
-  Signal,
-  computed,
-  signal
+  Component, computed, Input,
+  Signal
 } from '@angular/core';
 import { ErrorResponse } from '../../models';
 

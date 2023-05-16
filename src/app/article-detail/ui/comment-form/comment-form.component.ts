@@ -1,14 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  inject,
-  Input,
+  inject
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ArticleDetailStore } from '../../article-detail.store';
-import { AuthStore } from 'src/app/shared/store';
 import { ActivatedRoute } from '@angular/router';
+import { AuthStore } from 'src/app/shared/store';
+import { ArticleDetailStore } from '../../article-detail.store';
 
 @Component({
   selector: 'app-comment-form',
