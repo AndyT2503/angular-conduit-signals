@@ -1,4 +1,9 @@
-<form [formGroup]="articleForm" class="article-form" (ngSubmit)="submit.emit(articleForm.getRawValue())">
+<form
+  [formGroup]="articleForm"
+  class="article-form"
+  (keydown.enter)="$event.preventDefault()"
+  (ngSubmit)="submit.emit(articleForm.getRawValue())"
+>
   <app-form-errors [errorResponse]="errorResponse"></app-form-errors>
   <input
     type="text"
@@ -21,7 +26,5 @@
   <div class="form-group">
     <app-tag-list-select formControlName="tagList"></app-tag-list-select>
   </div>
-  <button type="submit" class="btn submit-btn btn-lg">
-    Publish Article
-  </button>
+  <button type="submit" class="btn submit-btn btn-lg">Publish Article</button>
 </form>
