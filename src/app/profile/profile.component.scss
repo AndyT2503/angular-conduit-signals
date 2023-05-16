@@ -1,0 +1,32 @@
+.banner {
+  background-color: var(--white-gray-color);
+  color: var(--blue-black-color);
+  padding: 2rem;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 58px;
+  .container {
+    max-width: 1176px;
+
+    .user-info {
+      text-align: center;
+
+      .username {
+        font-weight: 700;
+      }
+
+      .avatar {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+}
+.content {
+  position: relative;
+  margin-top: 263px;
+  max-width: 1140px;
+}

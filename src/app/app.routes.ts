@@ -31,6 +31,10 @@ export const routes: Routes = [
     loadComponent: () => import('./article-detail/article-detail.component'),
   },
   {
+    path: ':username',
+    loadChildren: () => import('./profile/profile.routes'),
+  },
+  {
     path: '',
     loadComponent: () => import('./home/home.component'),
     title: 'Home',

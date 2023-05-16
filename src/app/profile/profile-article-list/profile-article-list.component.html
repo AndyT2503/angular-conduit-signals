@@ -1,0 +1,10 @@
+<app-article-list
+  (toggleFavorite)="toggleFavorite($event)"
+  [articleList]="articleList"
+></app-article-list>
+<app-pagination
+  [totalCount]="articleCount"
+  [offset]="currentOffset"
+  (offsetChange)="loadArticle($event)"
+  [limit]="pageLimit"
+></app-pagination>

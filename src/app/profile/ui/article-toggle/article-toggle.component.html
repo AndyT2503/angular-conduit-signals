@@ -1,0 +1,15 @@
+<div class="toggle">
+  <ul class="nav nav-pills outline-active">
+    <ng-container *ngFor="let tab of tabList()">
+      <li class="nav-item">
+        <span
+          class="nav-link"
+          [routerLink]="tab.link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="active"
+          >{{ tab.title }}</span
+        >
+      </li>
+    </ng-container>
+  </ul>
+</div>
