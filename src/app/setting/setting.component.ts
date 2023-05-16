@@ -5,10 +5,12 @@ import {
   inject,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { UpdateProfileBodyRequest } from '../shared/services';
+import { UpdateCurrentUserBodyRequest } from '../shared/services';
 import { AuthStore } from '../shared/store';
 import { TypedFormGroup } from '../shared/utils';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
+import { User } from '../shared/models';
 @Component({
   selector: 'app-setting',
   standalone: true,
@@ -19,35 +21,37 @@ import { TypedFormGroup } from '../shared/utils';
 })
 export default class SettingComponent implements OnInit {
   readonly #authStore = inject(AuthStore);
-  readonly settingForm: TypedFormGroup<UpdateProfileBodyRequest> = new FormGroup({
-    bio: new FormControl('', {
-      nonNullable: true,
-    }),
-    email: new FormControl('', {
-      nonNullable: true,
-    }),
-    password: new FormControl('', {
-      nonNullable: true,
-    }),
-    username: new FormControl('', {
-      nonNullable: true,
-    }),
-    image: new FormControl('', {
-      nonNullable: true,
-    }),
-  });
+  readonly settingForm: TypedFormGroup<UpdateCurrentUserBodyRequest> =
+    new FormGroup({
+      bio: new FormControl('', {
+        nonNullable: true,
+      }),
+      email: new FormControl('', {
+        nonNullable: true,
+      }),
+      password: new FormControl('', {
+        nonNullable: true,
+      }),
+      username: new FormControl('', {
+        nonNullable: true,
+      }),
+      image: new FormControl('', {
+        nonNullable: true,
+      }),
+    });
+  readonly currentUser$ = this.#authStore
+    .select((x) => x.user)
+    .pipe(takeUntilDestroyed());
 
   ngOnInit(): void {
-    const currentUser = this.#authStore.selectors.user();
-    if (!currentUser) {
-      this.#authStore.logout();
-      return;
-    }
-    this.settingForm.patchValue(currentUser);
+    this.#authStore.getCurrentUser();
+    this.currentUser$
+      .pipe(filter((user): user is User => !!user))
+      .subscribe((currentUser) => this.settingForm.patchValue(currentUser));
   }
 
   submit(): void {
-    this.#authStore.updateProfile(this.settingForm.getRawValue());
+    this.#authStore.updateCurrentUser(this.settingForm);
   }
 
   logout(): void {

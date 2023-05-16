@@ -9,7 +9,7 @@ export type RegisterBodyRequest = Pick<User, 'email' | 'username'> & {
   password: string;
 };
 
-export type UpdateProfileBodyRequest = Pick<
+export type UpdateCurrentUserBodyRequest = Pick<
   User,
   'email' | 'username' | 'bio' | 'image'
 > & { password: string };
@@ -32,11 +32,11 @@ export class UserAndAuthenticationService {
     });
   }
 
-  getUserProfile(): Observable<UserAPIResponse> {
+  getCurrentUser(): Observable<UserAPIResponse> {
     return this.#httpClient.get<UserAPIResponse>('/user');
   }
 
-  updateUserProfile(user: UpdateProfileBodyRequest): Observable<UserAPIResponse> {
+  updateCurrentUser(user: UpdateCurrentUserBodyRequest): Observable<UserAPIResponse> {
     return this.#httpClient.put<UserAPIResponse>('/user', {
       user,
     });

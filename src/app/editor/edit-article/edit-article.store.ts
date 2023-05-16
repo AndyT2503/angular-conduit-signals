@@ -4,9 +4,15 @@ import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { exhaustMap, switchMap } from 'rxjs';
 import { Article, ErrorResponse } from 'src/app/shared/models';
-import { ArticleService, UpsertArticleBodyRequest } from 'src/app/shared/services';
+import {
+  ArticleService,
+  UpsertArticleBodyRequest,
+} from 'src/app/shared/services';
 import { AuthStore } from 'src/app/shared/store';
-import { ComponentStoreWithSelectors } from 'src/app/shared/utils';
+import {
+  ComponentStoreWithSelectors,
+  TypedFormGroup,
+} from 'src/app/shared/utils';
 
 interface EditArticleState {
   article: Article;
@@ -47,10 +53,13 @@ export class EditArticleStore
     )
   );
 
-  readonly updateArticle = this.effect<UpsertArticleBodyRequest>(
-    exhaustMap((request) =>
-      this.#articleService
-        .updateArticle(this.selectors.article().slug, request)
+  readonly updateArticle = this.effect<
+    TypedFormGroup<UpsertArticleBodyRequest>
+  >(
+    exhaustMap((form) => {
+      form.disable();
+      return this.#articleService
+        .updateArticle(this.selectors.article().slug, form.getRawValue())
         .pipe(
           tapResponse(
             (response) => {
@@ -67,9 +76,12 @@ export class EditArticleStore
               this.patchState({
                 errorResponse: error.error,
               });
+            },
+            () => {
+              form.enable();
             }
           )
-        )
-    )
+        );
+    })
   );
 }

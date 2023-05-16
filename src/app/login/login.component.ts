@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -19,7 +24,7 @@ import { TypedFormGroup } from '../shared/utils';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class LoginComponent {
+export default class LoginComponent implements OnDestroy {
   readonly #authStore = inject(AuthStore);
   readonly errorResponse = this.#authStore.selectors.errorResponse;
   readonly loginForm: TypedFormGroup<LoginBodyRequest> = new FormGroup({
@@ -33,6 +38,10 @@ export default class LoginComponent {
   });
 
   login(): void {
-    this.#authStore.login(this.loginForm.getRawValue());
+    this.#authStore.login(this.loginForm);
+  }
+
+  ngOnDestroy(): void {
+    this.#authStore.resetErrorResponse();
   }
 }

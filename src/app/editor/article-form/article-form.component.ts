@@ -47,5 +47,5 @@ export class ArticleFormComponent {
       });
     }
   }
-  @Output() submit = new EventEmitter<UpsertArticleBodyRequest>();
+  @Output() submit = new EventEmitter<TypedFormGroup<UpsertArticleBodyRequest>>();
 }

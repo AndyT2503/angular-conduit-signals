@@ -4,6 +4,13 @@
   <form [formGroup]="settingForm" (ngSubmit)="submit()" class="setting-form">
     <input
       type="text"
+      formControlName="image"
+      class="form-control form-control-lg"
+      autocomplete="new-username"
+      placeholder="Url of profile picture"
+    />
+    <input
+      type="text"
       formControlName="username"
       class="form-control form-control-lg"
       autocomplete="new-username"
@@ -29,11 +36,13 @@
       autocomplete="new-password"
       placeholder="New Password"
     />
-    <button type="submit" class="btn update-btn btn-lg">
-      Update Setting
-    </button>
-    <hr/>
-    <button type="button" class="btn logout-btn btn-outline-danger" (click)="logout()">
+    <button type="submit" class="btn update-btn btn-lg">Update Setting</button>
+    <hr />
+    <button
+      type="button"
+      class="btn logout-btn btn-outline-danger"
+      (click)="logout()"
+    >
       Or click here to logout
     </button>
   </form>

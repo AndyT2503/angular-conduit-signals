@@ -4,9 +4,15 @@ import { Router } from '@angular/router';
 import { OnStoreInit, tapResponse } from '@ngrx/component-store';
 import { exhaustMap } from 'rxjs';
 import { ErrorResponse } from 'src/app/shared/models';
-import { ArticleService, UpsertArticleBodyRequest } from 'src/app/shared/services';
+import {
+  ArticleService,
+  UpsertArticleBodyRequest,
+} from 'src/app/shared/services';
 import { AuthStore } from 'src/app/shared/store';
-import { ComponentStoreWithSelectors } from 'src/app/shared/utils';
+import {
+  ComponentStoreWithSelectors,
+  TypedFormGroup,
+} from 'src/app/shared/utils';
 
 interface NewArticleState {
   errorResponse: ErrorResponse | null;
@@ -22,13 +28,16 @@ export class NewArticleStore
   readonly #articleService = inject(ArticleService);
   ngrxOnStoreInit(): void {
     this.setState({
-      errorResponse: null
+      errorResponse: null,
     });
   }
 
-  readonly createNewArticle = this.effect<UpsertArticleBodyRequest>(
-    exhaustMap((request) =>
-      this.#articleService.createArticle(request).pipe(
+  readonly createNewArticle = this.effect<
+    TypedFormGroup<UpsertArticleBodyRequest>
+  >(
+    exhaustMap((form) => {
+      form.disable();
+      return this.#articleService.createArticle(form.getRawValue()).pipe(
         tapResponse(
           (response) => {
             if (response && response.article) {
@@ -42,11 +51,14 @@ export class NewArticleStore
           },
           (error: HttpErrorResponse) => {
             this.patchState({
-              errorResponse: error.error
+              errorResponse: error.error,
             });
+          },
+          () => {
+            form.enable();
           }
         )
-      )
-    )
+      );
+    })
   );
 }

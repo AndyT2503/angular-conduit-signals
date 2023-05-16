@@ -2,7 +2,7 @@
   [formGroup]="articleForm"
   class="article-form"
   (keydown.enter)="$event.preventDefault()"
-  (ngSubmit)="submit.emit(articleForm.getRawValue())"
+  (ngSubmit)="submit.emit(articleForm)"
 >
   <app-form-errors [errorResponse]="errorResponse"></app-form-errors>
   <input

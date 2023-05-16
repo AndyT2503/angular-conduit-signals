@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -19,7 +24,7 @@ import { TypedFormGroup } from '../shared/utils';
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class RegisterComponent {
+export default class RegisterComponent implements OnDestroy {
   readonly #authStore = inject(AuthStore);
   readonly errorResponse = this.#authStore.selectors.errorResponse;
   readonly registerForm: TypedFormGroup<RegisterBodyRequest> = new FormGroup({
@@ -35,8 +40,11 @@ export default class RegisterComponent {
     }),
   });
 
-
   register(): void {
-    this.#authStore.register(this.registerForm.getRawValue());
+    this.#authStore.register(this.registerForm);
+  }
+
+  ngOnDestroy(): void {
+    this.#authStore.resetErrorResponse();
   }
 }
