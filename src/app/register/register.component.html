@@ -2,7 +2,7 @@
   <h1>Sign up</h1>
   <a routerLink="/login" class="login">Have an account?</a>
 
-  <form [formGroup]="registerForm" class="register-form">
+  <form [formGroup]="registerForm" (ngSubmit)="register()" class="register-form">
     <app-form-errors [errorResponse]="errorResponse"></app-form-errors>
     <input
       type="text"
@@ -25,7 +25,7 @@
       autocomplete="new-password"
       placeholder="Password"
     />
-    <button type="button" (click)="register()" class="btn sign-up-btn btn-lg">
+    <button type="submit" class="btn sign-up-btn btn-lg">
       Sign up
     </button>
   </form>

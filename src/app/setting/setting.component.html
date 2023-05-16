@@ -1,7 +1,7 @@
 <div class="setting">
   <h1>Your Settings</h1>
 
-  <form [formGroup]="settingForm" class="setting-form">
+  <form [formGroup]="settingForm" (ngSubmit)="submit()" class="setting-form">
     <input
       type="text"
       formControlName="username"
@@ -29,7 +29,7 @@
       autocomplete="new-password"
       placeholder="New Password"
     />
-    <button type="button" (click)="submit()" class="btn update-btn btn-lg">
+    <button type="submit" class="btn update-btn btn-lg">
       Update Setting
     </button>
     <hr/>
