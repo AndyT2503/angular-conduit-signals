@@ -28,6 +28,7 @@
   <div class="row">
     <div class="col-xs-12 col-md-8 offset-md-2">
       <app-comment-form
+        [slug]="slug"
         *ngIf="isAuthenticated(); else requireLogin"
       ></app-comment-form>
       <ng-template #requireLogin>
@@ -37,7 +38,7 @@
           this article.
         </p>
       </ng-template>
-      <app-comment-list></app-comment-list>
+      <app-comment-list [slug]="slug"></app-comment-list>
     </div>
   </div>
 
@@ -60,8 +61,12 @@
             else editTmp
           "
         >
-          <button class="btn btn-outline-secondary btn-sm" (click)="toggleFollowAuthor(article)">
-            <i class="fa-solid fa-plus"></i> {{ article.author.following ? 'Unfollow' : 'Follow'}}
+          <button
+            class="btn btn-outline-secondary btn-sm"
+            (click)="toggleFollowAuthor(article)"
+          >
+            <i class="fa-solid fa-plus"></i>
+            {{ article.author.following ? "Unfollow" : "Follow" }}
             {{ article.author.username }}
           </button>
           <button
