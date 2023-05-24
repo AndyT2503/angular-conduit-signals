@@ -1,10 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  inject, OnInit,
-  signal
+  inject,
+  OnInit,
+  signal,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { provideComponentStore } from '@ngrx/component-store';
 import { map } from 'rxjs';
@@ -26,27 +27,26 @@ import { ProfileArticleListStore } from './profile-article-list.store';
 export default class ProfileArticleListComponent implements OnInit {
   readonly #route = inject(ActivatedRoute);
   readonly #profileArticleStore = inject(ProfileArticleListStore);
-  readonly articleType = injectArticleType();
+  readonly #articleType = injectArticleType();
+  readonly #username = toSignal(
+    this.#route.parent!.params.pipe(
+      map((params) => params['username'].replace('@', ''))
+    )
+  );
   readonly articleList = this.#profileArticleStore.selectors.articleList;
   readonly articleCount = this.#profileArticleStore.selectors.articleCount;
+  readonly currentOffset = this.#profileArticleStore.selectors.currentOffset;
   readonly pageLimit = signal(ProfileArticleListStore.PAGE_LIMIT);
-  readonly usernameChange$ = this.#route.parent!.params.pipe(
-    map((params) => params['username'].replace('@', '')),
-    takeUntilDestroyed()
-  );
-  username!: string;
-  currentOffset = signal<number>(0);
+
   ngOnInit(): void {
-    this.usernameChange$.subscribe((username) => (this.username = username));
     this.loadArticle(0);
   }
 
   loadArticle(offset: number): void {
-    this.currentOffset.set(offset);
     this.#profileArticleStore.getArticle({
-      articleType: this.articleType,
+      articleType: this.#articleType,
       offset,
-      username: this.username,
+      username: this.#username(),
     });
   }
 
