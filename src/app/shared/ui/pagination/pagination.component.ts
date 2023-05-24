@@ -21,7 +21,7 @@ import { DEFAULT_LIMIT } from '../../constants';
 })
 export class PaginationComponent {
   @Input({ required: true }) totalCount!: Signal<number>;
-  @Input() limit = signal<number>(DEFAULT_LIMIT);
+  @Input() limit = signal<number>(DEFAULT_LIMIT).asReadonly();
   @Input({ required: true }) offset!: Signal<number>;
 
   readonly totalPage = computed(() =>

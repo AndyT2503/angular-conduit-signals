@@ -36,7 +36,7 @@ export default class ProfileArticleListComponent implements OnInit {
   readonly articleList = this.#profileArticleStore.selectors.articleList;
   readonly articleCount = this.#profileArticleStore.selectors.articleCount;
   readonly currentOffset = this.#profileArticleStore.selectors.currentOffset;
-  readonly pageLimit = signal(ProfileArticleListStore.PAGE_LIMIT);
+  readonly pageLimit = signal(ProfileArticleListStore.PAGE_LIMIT).asReadonly();
 
   ngOnInit(): void {
     this.loadArticle(0);
