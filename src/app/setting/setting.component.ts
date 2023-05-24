@@ -1,16 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
+  Component, effect, inject, OnInit
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UpdateCurrentUserBodyRequest } from '../shared/services';
 import { AuthStore } from '../shared/store';
 import { TypedFormGroup } from '../shared/utils';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { filter } from 'rxjs';
-import { User } from '../shared/models';
 @Component({
   selector: 'app-setting',
   standalone: true,
@@ -39,15 +34,18 @@ export default class SettingComponent implements OnInit {
         nonNullable: true,
       }),
     });
-  readonly currentUser$ = this.#authStore
-    .select((x) => x.user)
-    .pipe(takeUntilDestroyed());
+
+  constructor() {
+    effect(() => {
+      const user = this.#authStore.selectors.user();
+      if (user) {
+        this.settingForm.patchValue(user);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.#authStore.getCurrentUser();
-    this.currentUser$
-      .pipe(filter((user): user is User => !!user))
-      .subscribe((currentUser) => this.settingForm.patchValue(currentUser));
   }
 
   submit(): void {
