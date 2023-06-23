@@ -8,7 +8,7 @@ import {
   Comment,
   CommentAPIResponse,
   CommentListAPIResponse,
-  PagingParams as PagingQueryParams
+  PagingQueryParams
 } from '../models';
 
 export type UpsertArticleBodyRequest = Pick<

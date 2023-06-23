@@ -1,4 +1,4 @@
-export interface PagingParams {
+export interface PagingQueryParams {
   limit: number;
   offset: number;
 }
