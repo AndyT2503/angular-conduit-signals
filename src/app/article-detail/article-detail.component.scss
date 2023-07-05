@@ -90,7 +90,7 @@
 
 .link {
   text-decoration: none;
-  color: #5cb85c;
+  color: var(--green-color);
   &:hover {
     text-decoration: underline;
   }
