@@ -74,7 +74,7 @@
             [ngClass]="article.favorited ? 'unfavorite-btn' : 'favorite-btn'"
             (click)="toggleFavorite(article)"
           >
-            <i class="fa-solid fa-heart"></i> Favorite Article ({{
+            <i class="fa-solid fa-heart"></i> {{ article.favorited ? 'Unfavorite Article' : 'Favorite Article'}} ({{
               article.favoritesCount
             }})
           </button>
