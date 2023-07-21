@@ -48,7 +48,7 @@ export default class HomeComponent implements OnInit {
 
   selectTag(tag: string): void {
     this.#homeStore.queryArticle({
-      feedType: 'Tag Feed',
+      feedType: FEED_TYPE.tagFeed,
       params: {
         limit: DEFAULT_LIMIT,
         offset: 0,
