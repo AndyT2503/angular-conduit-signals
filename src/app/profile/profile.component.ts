@@ -38,6 +38,7 @@ export default class ProfileComponent {
   toggleFollow(): void {
     if (!this.#authStore.selectors.isAuthenticated()) {
       this.#router.navigate(['/register']);
+      return;
     }
     this.#profileStore.toggleFollow(this.profile()!);
   }
