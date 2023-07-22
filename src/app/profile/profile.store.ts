@@ -54,8 +54,10 @@ export class ProfileStore
         }
       }).pipe(
         tapResponse(
-          () => {
-            this.getProfile(profile.username);
+          (response) => {
+            this.patchState({
+              profile: response.profile,
+            });
           },
           (error) => {
             console.error('Toggle Follow User Failed', error);
