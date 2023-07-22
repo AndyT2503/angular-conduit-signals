@@ -4,9 +4,9 @@ import {
   Component,
   computed,
   inject,
-  Input
+  Input,
 } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { provideComponentStore } from '@ngrx/component-store';
 import { AuthStore } from '../shared/store';
 import { ProfileStore } from './profile.store';
@@ -24,6 +24,7 @@ import { ArticleToggleComponent } from './ui/article-toggle/article-toggle.compo
 export default class ProfileComponent {
   readonly #profileStore = inject(ProfileStore);
   readonly #authStore = inject(AuthStore);
+  readonly #router = inject(Router);
   readonly profile = this.#profileStore.selectors.profile;
   readonly isCurrentUser = computed(
     () =>
@@ -35,6 +36,9 @@ export default class ProfileComponent {
   }
 
   toggleFollow(): void {
+    if (!this.#authStore.selectors.isAuthenticated()) {
+      this.#router.navigate(['/register']);
+    }
     this.#profileStore.toggleFollow(this.profile()!);
   }
 }
