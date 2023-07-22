@@ -12,7 +12,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { provideComponentStore } from '@ngrx/component-store';
 import { Article } from '../shared/models';
 import { AuthStore } from '../shared/store';
@@ -42,6 +42,7 @@ import { CommentListComponent } from './ui/comment-list/comment-list.component';
 })
 export default class ArticleDetailComponent implements OnInit {
   @Input() slug!: string;
+  readonly #router = inject(Router);
   readonly #articleStore = inject(ArticleDetailStore);
   readonly #authStore = inject(AuthStore);
   readonly isAuthenticated = this.#authStore.selectors.isAuthenticated;
@@ -53,14 +54,22 @@ export default class ArticleDetailComponent implements OnInit {
   }
 
   toggleFavorite(article: Article): void {
+    if (!this.#authStore.selectors.isAuthenticated()) {
+      this.#router.navigate(['/register']);
+      return;
+    }
     this.#articleStore.toggleFavorite(article);
   }
 
   deleteArticle(article: Article): void {
-    this.#articleStore.deleteArticle(article.slug)
+    this.#articleStore.deleteArticle(article.slug);
   }
 
   toggleFollowAuthor(article: Article): void {
+    if (!this.#authStore.selectors.isAuthenticated()) {
+      this.#router.navigate(['/register']);
+      return;
+    }
     this.#articleStore.toggleFollow(article);
   }
 }
