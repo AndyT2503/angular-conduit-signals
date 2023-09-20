@@ -31,8 +31,7 @@ export default class ProfileComponent {
       this.#authStore.selectors.user()?.username === this.profile()?.username
   );
   @Input() set username(value: string) {
-    const username = value.replace('@', '');
-    this.#profileStore.getProfile(username);
+    this.#profileStore.getProfile(value);
   }
 
   toggleFollow(): void {

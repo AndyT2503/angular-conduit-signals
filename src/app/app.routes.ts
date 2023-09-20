@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes, UrlSegment } from '@angular/router';
 import { authGuard, nonAuthGuard } from './shared/guards';
 
 export const routes: Routes = [
@@ -31,7 +31,17 @@ export const routes: Routes = [
     loadComponent: () => import('./article-detail/article-detail.component'),
   },
   {
-    path: ':username',
+    matcher: (url) => {
+      if (url.length === 1 && url[0].path.match(/^@.*$/)) {
+        return {
+          consumed: url,
+          posParams: {
+            username: new UrlSegment(url[0].path.slice(1), {}),
+          },
+        };
+      }
+      return null;
+    },
     loadChildren: () => import('./profile/profile.routes'),
   },
   {
