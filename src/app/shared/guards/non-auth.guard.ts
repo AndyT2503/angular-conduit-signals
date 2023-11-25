@@ -9,7 +9,7 @@ export const nonAuthGuard: CanMatchFn = () => {
   return authStore
     .select((x) => x.isAuthenticated)
     .pipe(
-      map((isAuth) => !isAuth ?? router.createUrlTree(['/'])),
+      map((isAuth) => !isAuth || router.createUrlTree(['/'])),
       take(1)
     );
 };
