@@ -32,9 +32,9 @@ export const routes: Routes = [
   },
   {
     matcher: (url) => {
-      if (url.length === 1 && url[0].path.match(/^@.*$/)) {
+      if (url[0].path.startsWith('@')) {
         return {
-          consumed: url,
+          consumed: [url[0]],
           posParams: {
             username: new UrlSegment(url[0].path.slice(1), {}),
           },
@@ -42,6 +42,7 @@ export const routes: Routes = [
       }
       return null;
     },
+    loadComponent: () => import('./profile/profile.component'),
     loadChildren: () => import('./profile/profile.routes'),
   },
   {

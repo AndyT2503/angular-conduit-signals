@@ -29,9 +29,7 @@ export default class ProfileArticleListComponent implements OnInit {
   readonly #profileArticleStore = inject(ProfileArticleListStore);
   readonly #articleType = injectArticleType();
   readonly #username = toSignal(
-    this.#route.parent!.params.pipe(
-      map((params) => params['username'].replace('@', ''))
-    )
+    this.#route.parent!.params.pipe(map((params) => params['username']))
   );
   readonly articleList = this.#profileArticleStore.selectors.articleList;
   readonly articleCount = this.#profileArticleStore.selectors.articleCount;
@@ -39,6 +37,7 @@ export default class ProfileArticleListComponent implements OnInit {
   readonly pageLimit = signal(ProfileArticleListStore.PAGE_LIMIT).asReadonly();
 
   ngOnInit(): void {
+    console.log('init', this.#articleType);
     this.loadArticle(0);
   }
 
