@@ -52,7 +52,7 @@ export class HomeStore
         tapResponse(
           (res) => {
             this.patchState({
-              tags: res.tags,
+              tags: res.tags.slice(0, 30),
             });
           },
           (error) => {
